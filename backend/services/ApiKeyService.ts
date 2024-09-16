@@ -1,6 +1,7 @@
 import { db } from '@backend/db/db';
 import { toISOString } from '@backend/services/dbHelpers';
-import { ApiKey, Organization } from '@type/organization';
+import { ApiKey } from '@type/apiKey';
+import { Organization } from '@type/organization';
 import crypto from 'crypto';
 import OrganizationsService from './OrganizationsService';
 
