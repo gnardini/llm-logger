@@ -1,3 +1,4 @@
+
 import { Button } from '@frontend/components/common/Button';
 import { Dropdown } from '@frontend/components/common/Dropdown';
 import { useLogsData } from '@frontend/components/logs/data/useLogsData';
@@ -10,7 +11,7 @@ interface LogsTableProps {
 }
 
 const rowClassName = 'px-4 py-2 text-center';
-const headerClassNames = `${rowClassName} text-xs uppercase font-semibold border-x border-text-secondary`;
+const headerClassNames = `${rowClassName} text-xs uppercase font-semibold border-x border-text-secondary first:border-l-0 last:border-r-0`;
 
 export function LogsTable({ initialLogs, tags }: LogsTableProps) {
   const { logs, loading, error, tagsFilter, setTagsFilter, loadMoreLogs, hasMoreLogs } =
@@ -35,24 +36,26 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
         />
       </div>
       <div className="overflow-x-auto">
-        <table className="border-collapse w-full rounded border border-primary-accent">
-          <thead>
-            <tr className="bg-primary-accent">
-              <th className={headerClassNames}>Time</th>
-              <th className={headerClassNames}>Model</th>
-              <th className={headerClassNames}>Input Tokens</th>
-              <th className={headerClassNames}>Output Tokens</th>
-              <th className={`${headerClassNames} w-[50px]`}>Error</th>
-              <th className={headerClassNames}>Tags</th>
-              <th className={headerClassNames}>User</th>
-            </tr>
-          </thead>
-          <tbody>
-            {logs.map((log) => (
-              <LogsRow key={log.id} log={log} />
-            ))}
-          </tbody>
-        </table>
+        <div className="rounded-xl overflow-hidden border border-primary-accent">
+          <table className="border-collapse w-full">
+            <thead>
+              <tr className="bg-primary-accent">
+                <th className={`${headerClassNames} `}>Time</th>
+                <th className={`${headerClassNames}`}>Model</th>
+                <th className={`${headerClassNames}`}>Input Tokens</th>
+                <th className={`${headerClassNames}`}>Output Tokens</th>
+                <th className={`${headerClassNames} w-[50px]`}>Error</th>
+                <th className={`${headerClassNames}`}>Tags</th>
+                <th className={`${headerClassNames}`}>User</th>
+              </tr>
+            </thead>
+            <tbody>
+              {logs.map((log) => (
+                <LogsRow key={log.id} log={log} />
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
       {hasMoreLogs && (
         <div className="mt-4 text-center">
