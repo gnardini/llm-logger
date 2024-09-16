@@ -9,7 +9,7 @@ export function SettingsScreen({}: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <Container activeTab={Tab.Settings} showSideBar={false}>
+    <Container activeTab={Tab.Settings} showSideBar>
       <h1>Settings</h1>
       <Button type={ButtonType.Primary} onClick={() => setIsModalOpen(true)} className="mt-4 p-3">
         Create project

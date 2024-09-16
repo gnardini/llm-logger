@@ -51,9 +51,6 @@ export function LogsRow({ log }: LogsRowProps) {
         <td className={rowClassName}>{log.model}</td>
         <td className={rowClassName}>{log.input_tokens}</td>
         <td className={rowClassName}>{log.output_tokens}</td>
-        <td className={`${rowClassName} w-[50px] max-w-[50px] overflow-x-auto whitespace-nowrap`}>
-          {log.error || '-'}
-        </td>
         <td className={rowClassName}>
           {log.tags.length > 0 ? (
             <div className="flex flex-wrap gap-1">
@@ -68,6 +65,9 @@ export function LogsRow({ log }: LogsRowProps) {
           )}
         </td>
         <td className={rowClassName}>{log.user || '-'}</td>
+        <td className={`${rowClassName} w-[50px] max-w-[50px] overflow-x-auto whitespace-nowrap`}>
+          {log.error || '-'}
+        </td>
       </tr>
       {expanded && (
         <tr>
