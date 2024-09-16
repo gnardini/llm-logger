@@ -2,7 +2,7 @@ import { Loader } from '@frontend/components/common/Loader';
 import { LogView } from '@frontend/components/logs/views/LogView';
 import { useGetLogDetailsQuery } from '@frontend/queries/logs/useGetLogDetailsQuery';
 import { FullLog, Log } from '@type/log';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ColumnName } from '../hooks/useColumnVisibility';
 
 interface LogsRowProps {
@@ -16,6 +16,27 @@ export function LogsRow({ log, visibleColumns }: LogsRowProps) {
   const [expanded, setExpanded] = useState(false);
   const { execute, loading, error } = useGetLogDetailsQuery();
   const [logDetails, setLogDetails] = useState<FullLog | null>(null);
+  const [rowWidth, setRowWidth] = useState(0);
+  const rowRef = useRef<HTMLTableRowElement>(null);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (rowRef.current) {
+        console.log(
+          ' Q',
+          rowRef.current.offsetWidth,
+          rowRef.current.clientWidth,
+          rowRef.current.getBoundingClientRect(),
+        );
+        setRowWidth(rowRef.current.offsetWidth);
+      }
+    };
+
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
 
   const handleRowClick = async () => {
     setExpanded(!expanded);
@@ -40,6 +61,7 @@ export function LogsRow({ log, visibleColumns }: LogsRowProps) {
   return (
     <>
       <tr
+        ref={rowRef}
         key={log.id}
         className="border-t border-gray-300 cursor-pointer hover:bg-gray-700"
         onClick={handleRowClick}
@@ -52,9 +74,7 @@ export function LogsRow({ log, visibleColumns }: LogsRowProps) {
             </div>
           </td>
         )}
-        {visibleColumns.includes('model') && (
-          <td className={rowClassName}>{log.model}</td>
-        )}
+        {visibleColumns.includes('model') && <td className={rowClassName}>{log.model}</td>}
         {visibleColumns.includes('inputTokens') && (
           <td className={rowClassName}>{log.input_tokens}</td>
         )}
@@ -76,9 +96,7 @@ export function LogsRow({ log, visibleColumns }: LogsRowProps) {
             )}
           </td>
         )}
-        {visibleColumns.includes('user') && (
-          <td className={rowClassName}>{log.user || '-'}</td>
-        )}
+        {visibleColumns.includes('user') && <td className={rowClassName}>{log.user || '-'}</td>}
         {visibleColumns.includes('error') && (
           <td className={`${rowClassName} w-[50px] max-w-[50px] overflow-x-auto whitespace-nowrap`}>
             {log.error || '-'}
@@ -90,7 +108,7 @@ export function LogsRow({ log, visibleColumns }: LogsRowProps) {
           <td colSpan={visibleColumns.length} className="md:px-4 py-2">
             {loading && <Loader />}
             {error && <div>There was an error loading the log details: {error}</div>}
-            {logDetails && <LogView logDetails={logDetails} />}
+            {logDetails && <LogView logDetails={logDetails} width={rowWidth} />}
           </td>
         </tr>
       )}

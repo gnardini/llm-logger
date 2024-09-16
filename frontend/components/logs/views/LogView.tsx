@@ -3,11 +3,12 @@ import { useState } from 'react';
 
 interface LogViewProps {
   logDetails: FullLog;
+  width: number;
 }
 
 type TabType = 'input' | 'output';
 
-export function LogView({ logDetails }: LogViewProps) {
+export function LogView({ logDetails, width }: LogViewProps) {
   const [activeTab, setActiveTab] = useState<TabType>('input');
 
   const tabClass = (tab: TabType) =>
@@ -71,7 +72,7 @@ export function LogView({ logDetails }: LogViewProps) {
   };
 
   return (
-    <div className="w-full max-w-screen-sm">
+    <div className="w-full" style={{ maxWidth: `${width}px` }}>
       <div className="flex flex-wrap">
         <div className={tabClass('input')} onClick={() => setActiveTab('input')}>
           Input
