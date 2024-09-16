@@ -15,7 +15,7 @@ export function Container({
   children,
   activeTab,
   showSideBar,
-  className = 'flex-1 p-6 overflow-auto',
+  className = 'flex-1 p-4 md:p-6 overflow-auto',
 }: ContainerProps) {
   const { organizations, activeOrg, setActiveOrg } = useAuth();
 
@@ -33,7 +33,7 @@ export function Container({
   return (
     <div className="flex h-screen">
       {showSideBar && (
-        <div className="w-64 bg-secondary-background p-4">
+        <div className="hidden md:block w-64 bg-secondary-background p-4">
           <Dropdown<Organization>
             options={organizations}
             selectedOption={activeOrg}
