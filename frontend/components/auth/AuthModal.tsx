@@ -8,7 +8,7 @@ interface AuthModalProps {
 
 export function AuthModal({ isOpen, onClose }: AuthModalProps) {
   const handleAuthSuccess = () => {
-    window.location.href = `/dashboard`;
+    window.location.href = `/logs`;
   };
 
   return (

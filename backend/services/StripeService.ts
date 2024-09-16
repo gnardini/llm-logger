@@ -25,8 +25,8 @@ export const StripeService = {
         },
       ],
       mode: 'payment',
-      success_url: `${PUBLIC_APP_URL}/dashboard?stripe_success=true`,
-      cancel_url: `${PUBLIC_APP_URL}/dashboard?stripe_cancel=true`,
+      success_url: `${PUBLIC_APP_URL}/logs?stripe_success=true`,
+      cancel_url: `${PUBLIC_APP_URL}/logs?stripe_cancel=true`,
       metadata: {
         user_id: userId,
       },

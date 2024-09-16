@@ -27,7 +27,7 @@ export function WelcomeScreen({ token, invitationDetails }: WelcomeScreenProps) 
     try {
       await execute({ token, password });
       showNotification('Welcome! Your account has been set up.', 'success');
-      window.location.href = '/dashboard';
+      window.location.href = '/logs';
     } catch (error) {
       showNotification('An error occurred. Please try again.', 'error');
     }

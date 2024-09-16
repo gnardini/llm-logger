@@ -11,7 +11,6 @@ export async function up(knex: Knex): Promise<void> {
     table.uuid('id').primary().defaultTo(knex.raw('gen_random_uuid()'));
     table.uuid('user_id').references('id').inTable('users').onDelete('CASCADE').notNullable();
     table.uuid('organization_id').references('id').inTable('organizations').onDelete('CASCADE').notNullable();
-    table.string('membership_type').notNullable();
     table.unique(['user_id', 'organization_id']);
     table.timestamps(true, true);
   });

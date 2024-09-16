@@ -22,7 +22,6 @@ cache/
 node_modules/
 
 .env
-.env.*
 app.yaml
 serviceAccountKey.json
 .kamara

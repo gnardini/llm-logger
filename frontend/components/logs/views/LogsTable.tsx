@@ -10,7 +10,7 @@ interface LogsTableProps {
 }
 
 const rowClassName = 'px-4 py-2 text-center';
-const headerClassNames = `${rowClassName} text-xs uppercase font-semibold`;
+const headerClassNames = `${rowClassName} text-xs uppercase font-semibold border-x border-text-secondary`;
 
 export function LogsTable({ initialLogs, tags }: LogsTableProps) {
   const { logs, loading, error, tagsFilter, setTagsFilter, loadMoreLogs, hasMoreLogs } =
@@ -35,9 +35,9 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
         />
       </div>
       <div className="overflow-x-auto">
-        <table className="border-collapse w-full">
+        <table className="border-collapse w-full rounded border border-primary-accent">
           <thead>
-            <tr className="bg-tertiary-background">
+            <tr className="bg-primary-accent">
               <th className={headerClassNames}>Time</th>
               <th className={headerClassNames}>Model</th>
               <th className={headerClassNames}>Input Tokens</th>
