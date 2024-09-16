@@ -54,7 +54,19 @@ export function LogsRow({ log }: LogsRowProps) {
         <td className={`${rowClassName} w-[50px] max-w-[50px] overflow-x-auto whitespace-nowrap`}>
           {log.error || '-'}
         </td>
-        <td className={rowClassName}>{log.tags.join(', ') || '-'}</td>
+        <td className={rowClassName}>
+          {log.tags.length > 0 ? (
+            <div className="flex flex-wrap gap-1">
+              {log.tags.map((tag, index) => (
+                <span key={index} className="px-2 py-1 rounded-full bg-primary-accent">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          ) : (
+            '-'
+          )}
+        </td>
         <td className={rowClassName}>{log.user || '-'}</td>
       </tr>
       {expanded && (
