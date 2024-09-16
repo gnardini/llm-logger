@@ -9,7 +9,7 @@ export default createApiHandler({
   requiresAuth: true,
   handler: async (data, { user }) => {
     const { organization_id, tags: tagsString, user: filterUser, page } = data;
-    const tags = tagsString?.split(',') ?? [];
+    const tags = tagsString?.split(',').filter((t) => t.length > 0) ?? [];
 
     const hasAccess = await OrganizationsService.userOwnsOrganization(user.id, organization_id);
     if (!hasAccess) {
