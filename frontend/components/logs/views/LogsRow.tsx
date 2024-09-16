@@ -87,7 +87,7 @@ export function LogsRow({ log, visibleColumns }: LogsRowProps) {
       </tr>
       {expanded && (
         <tr>
-          <td colSpan={visibleColumns.length} className="px-4 py-2">
+          <td colSpan={visibleColumns.length} className="md:px-4 py-2">
             {loading && <Loader />}
             {error && <div>There was an error loading the log details: {error}</div>}
             {logDetails && <LogView logDetails={logDetails} />}

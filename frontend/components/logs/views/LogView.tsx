@@ -71,7 +71,7 @@ export function LogView({ logDetails }: LogViewProps) {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-full max-w-screen-sm">
       <div className="flex flex-wrap">
         <div className={tabClass('input')} onClick={() => setActiveTab('input')}>
           Input

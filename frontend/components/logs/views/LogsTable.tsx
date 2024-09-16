@@ -59,28 +59,26 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
           className="ml-4 p-2 rounded-full hover:bg-gray-700 cursor-pointer"
         />
       </div>
-      <div className="overflow-x-auto">
-        <div className="rounded-xl overflow-hidden border border-primary-accent">
-          <table className="border-collapse w-full">
-            <thead>
-              <tr className="bg-primary-accent">
-                {(Object.keys(columnHeaders) as ColumnName[]).map(
-                  (column) =>
-                    visibleColumns.includes(column) && (
-                      <th key={column} className={`${headerClassNames}`}>
-                        {columnHeaders[column]}
-                      </th>
-                    ),
-                )}
-              </tr>
-            </thead>
-            <tbody>
-              {logs.map((log) => (
-                <LogsRow key={log.id} log={log} visibleColumns={visibleColumns} />
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="overflow-x-auto rounded-xl border border-primary-accent">
+        <table className="border-collapse w-full min-w-max">
+          <thead>
+            <tr className="bg-primary-accent">
+              {(Object.keys(columnHeaders) as ColumnName[]).map(
+                (column) =>
+                  visibleColumns.includes(column) && (
+                    <th key={column} className={`${headerClassNames}`}>
+                      {columnHeaders[column]}
+                    </th>
+                  ),
+              )}
+            </tr>
+          </thead>
+          <tbody>
+            {logs.map((log) => (
+              <LogsRow key={log.id} log={log} visibleColumns={visibleColumns} />
+            ))}
+          </tbody>
+        </table>
       </div>
       {hasMoreLogs && (
         <div className="mt-4 text-center">
