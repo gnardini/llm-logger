@@ -89,7 +89,7 @@ const OrganizationMembersService = {
       // TODO: Update welcome email
       EmailService.sendEmail(
         userEmail,
-        `You've been invited to join ${org?.name}`,
+        `You've been invited to join ${org?.name} LLM Logger`,
         `Hi!
 
 You've been invited to the team at ${org?.name}.

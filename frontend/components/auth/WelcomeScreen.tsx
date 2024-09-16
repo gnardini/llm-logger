@@ -35,7 +35,7 @@ export function WelcomeScreen({ token, invitationDetails }: WelcomeScreenProps) 
 
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-secondary-background rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6 text-center text-secondary-accent">Welcome to Template!</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center text-secondary-accent">Welcome to LLM Logger!</h2>
       <p className='mb-4'>You were invited by the team at {invitationDetails.organizationName}</p>
       <p className='mb-4'>Create an account to get started:</p>
       <form onSubmit={handleSubmit} className="space-y-4">

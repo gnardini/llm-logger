@@ -2,7 +2,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const PUBLIC_APP_URL = 'https://template.com';
+export const PUBLIC_APP_URL = 'https://llmlogger.com';
 
 export const PORT = process.env.PORT || 8080;
 export const NODE_ENV = process.env.NODE_ENV ?? 'undefined';

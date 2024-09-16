@@ -8,6 +8,6 @@ export default {
   Layout,
   Head,
 
-  title: 'Template',
+  title: 'LLM Logger',
   extends: vikeReact,
 } satisfies Config;

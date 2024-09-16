@@ -39,7 +39,7 @@ export function LandingScreen({ user }: Props) {
       <nav className="w-full max-w-[1000px] flex justify-end items-center mb-10 gap-8">
         <div className="flex gap-1 mr-auto items-center">
           <img src={'/logo.png'} className="w-16 h-16" />
-          <h2 className="text-4xl">Template</h2>
+          <h2 className="text-4xl">LLM Logger</h2>
         </div>
         <a
           href="https://github.com/gnardini"
