@@ -2,7 +2,7 @@ import { Loader } from '@frontend/components/common/Loader';
 import { LogView } from '@frontend/components/logs/views/LogView';
 import { useGetLogDetailsQuery } from '@frontend/queries/logs/useGetLogDetailsQuery';
 import { FullLog, Log } from '@type/log';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { ColumnName } from '../hooks/useColumnVisibility';
 
 interface LogsRowProps {
@@ -16,20 +16,11 @@ export function LogsRow({ log, visibleColumns }: LogsRowProps) {
   const [expanded, setExpanded] = useState(false);
   const { execute, loading, error } = useGetLogDetailsQuery();
   const [logDetails, setLogDetails] = useState<FullLog | null>(null);
-  const [rowWidth, setRowWidth] = useState(0);
-  const rowRef = useRef<HTMLTableRowElement>(null);
+  const [viewportWidth, setViewportWidth] = useState(0);
 
   useEffect(() => {
     const updateWidth = () => {
-      if (rowRef.current) {
-        console.log(
-          ' Q',
-          rowRef.current.offsetWidth,
-          rowRef.current.clientWidth,
-          rowRef.current.getBoundingClientRect(),
-        );
-        setRowWidth(rowRef.current.offsetWidth);
-      }
+      setViewportWidth(window.innerWidth - 32);
     };
 
     updateWidth();
@@ -61,7 +52,6 @@ export function LogsRow({ log, visibleColumns }: LogsRowProps) {
   return (
     <>
       <tr
-        ref={rowRef}
         key={log.id}
         className="border-t border-gray-300 cursor-pointer hover:bg-gray-700"
         onClick={handleRowClick}
@@ -108,7 +98,7 @@ export function LogsRow({ log, visibleColumns }: LogsRowProps) {
           <td colSpan={visibleColumns.length} className="md:px-4 py-2">
             {loading && <Loader />}
             {error && <div>There was an error loading the log details: {error}</div>}
-            {logDetails && <LogView logDetails={logDetails} width={rowWidth} />}
+            {logDetails && <LogView logDetails={logDetails} width={viewportWidth} />}
           </td>
         </tr>
       )}
