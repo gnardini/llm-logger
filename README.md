@@ -1,6 +1,10 @@
-# Template
+# LLM Logger
 
-Overall description of the project here.
+LLM Logger is a tool that helps you keep track of your AI API calls
+        
+Building an AI product is hard. AIs are unreliable, don't always follow output format, and can behave in surprising and unexpected ways, especially with free-form user input.
+        
+We help you keep track of how your product is working in the wild and help you improve it.
 
 ## Prerequisites
 
