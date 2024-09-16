@@ -1,0 +1,28 @@
+
+*.js.map
+dist/
+dist-ssr
+cache/
+*.DS_Store
+
+# yarn
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.yarnrc
+
+# Logs
+*.log
+
+# Exclude dependencies
+node_modules/
+
+.env
+.env.*
+app.yaml
+serviceAccountKey.json
+.kamara
