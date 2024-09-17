@@ -47,17 +47,16 @@ export function LogView({ logDetails, width }: LogViewProps) {
     const currentContent = (activeTab === 'input' ? logDetails.input : logDetails.output) ?? '';
 
     let formattedContent = currentContent;
-    if (activeTab === 'output') {
+
+    try {
+      formattedContent = parseAndFormatJSON(currentContent);
+    } catch (error) {
       try {
-        formattedContent = parseAndFormatJSON(currentContent);
+        const lines = currentContent.split('\n').filter((line) => line.trim() !== '');
+        const formattedLines = lines.map((line) => parseAndFormatJSON(line));
+        formattedContent = formattedLines.join('\n\n');
       } catch (error) {
-        try {
-          const lines = currentContent.split('\n').filter((line) => line.trim() !== '');
-          const formattedLines = lines.map((line) => parseAndFormatJSON(line));
-          formattedContent = formattedLines.join('\n\n');
-        } catch (error) {
-          formattedContent = currentContent;
-        }
+        formattedContent = currentContent;
       }
     }
 
