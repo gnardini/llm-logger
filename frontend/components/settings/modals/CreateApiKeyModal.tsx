@@ -1,10 +1,10 @@
 import { Button, ButtonType } from '@frontend/components/common/Button';
 import { Input } from '@frontend/components/common/Input';
 import { Modal } from '@frontend/components/common/Modal';
-import React, { useState, useRef, useEffect } from 'react';
+import { useNotification } from '@frontend/context/NotificationContext';
 import { useCreateApiKeyQuery } from '@frontend/queries/apiKeys/useCreateApiKeyQuery';
 import { ApiKey } from '@type/apiKey';
-import { useNotification } from '@frontend/context/NotificationContext';
+import { useEffect, useRef, useState } from 'react';
 import { FaCopy } from 'react-icons/fa';
 
 interface Props {
@@ -28,7 +28,6 @@ export function CreateApiKeyModal({ isOpen, onClose, onCreate, organizationId }:
 
   useEffect(() => {
     if (isOpen && inputRef.current) {
-      console.log('focus')
       inputRef.current.focus();
     }
   }, [isOpen]);
