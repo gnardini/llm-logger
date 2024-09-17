@@ -4,6 +4,7 @@ import { Dropdown } from './Dropdown';
 import { Organization } from '@type/organization';
 import { useAuth } from '@frontend/context/AuthContext';
 import { FaBars } from 'react-icons/fa';
+import { CrossIcon } from '@frontend/svgs/CrossIcon';
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -75,16 +76,26 @@ export function Container({
           </div>
 
           {/* Mobile Hamburger Icon */}
-          <div className="md:hidden absolute top-4 left-4 z-20">
-            <button onClick={toggleMobileMenu} className="text-text-primary">
-              <FaBars size={24} />
-            </button>
-          </div>
+          {!isMobileMenuOpen && (
+            <div className="md:hidden absolute top-4 left-4 z-20">
+              <button onClick={toggleMobileMenu} className="text-text-primary">
+                <FaBars size={24} />
+              </button>
+            </div>
+          )}
 
           {/* Mobile Menu */}
           {isMobileMenuOpen && (
-            <div className="md:hidden fixed inset-0 bg-secondary-background z-10 p-4">
-              {renderSidebarContent()}
+            <div className="md:hidden fixed inset-0 bg-gray-900 bg-opacity-90 z-10">
+              <div className="w-[85%] h-full bg-secondary-background p-4 relative">
+                <button
+                  onClick={toggleMobileMenu}
+                  className="absolute top-4 right-4 text-text-primary"
+                >
+                  <CrossIcon size={24} />
+                </button>
+                {renderSidebarContent()}
+              </div>
             </div>
           )}
         </>
