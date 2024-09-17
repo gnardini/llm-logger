@@ -8,7 +8,6 @@ export interface Log {
   organization_id: string;
   tags: string[];
   user: string | null;
-  api_key_id: string | null;
   created_at: string;
   updated_at: string;
 }
