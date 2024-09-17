@@ -25,7 +25,8 @@ export function Container({
   ];
 
   const onOrganizationChange = (newActiveOrg: Organization) => {
-    setActiveOrg(newActiveOrg);
+    // TODO: Fix onPageTransitionStart being called and uncomment
+    // setActiveOrg(newActiveOrg);
     const href = navItems.find((item) => item.tab === activeTab)?.href;
     window.location.href = `${href}?org_id=${newActiveOrg.id}`;
   };

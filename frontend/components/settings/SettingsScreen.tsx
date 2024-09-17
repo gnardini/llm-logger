@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { ApiKeysView } from './ApiKeysView';
 import { CreateOrgModal } from './modals/CreateOrgModal';
 import { useAuth } from '@frontend/context/AuthContext';
+import useIsTransitioning from '@frontend/hooks/useIsTransitioning';
+import { Loader } from '@frontend/components/common/Loader';
 
 interface Props {
   apiKeys: ApiKey[];
@@ -14,6 +16,8 @@ interface Props {
 export function SettingsScreen({ apiKeys }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { activeOrg } = useAuth();
+
+  const routeLoading = useIsTransitioning();
 
   return (
     <Container activeTab={Tab.Settings} showSideBar>
@@ -25,6 +29,8 @@ export function SettingsScreen({ apiKeys }: Props) {
           </Button>
         </div>
         <CreateOrgModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
+        {routeLoading && <Loader />}
 
         {activeOrg && <ApiKeysView organization={activeOrg} apiKeys={apiKeys} />}
       </div>
