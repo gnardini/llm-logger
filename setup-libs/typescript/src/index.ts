@@ -10,7 +10,7 @@ export interface LogData {
   model: string;
   input_tokens: number;
   output_tokens: number;
-  stop_reason?: string;
+  stop_reason?: string | null;
   input: string;
   output: string;
   error?: string;
@@ -53,6 +53,35 @@ export class LLMLogger {
       input_tokens: chatCompletion.usage?.prompt_tokens ?? 0,
       output_tokens: chatCompletion.usage?.completion_tokens ?? 0,
       stop_reason: chatCompletion.choices[0].finish_reason,
+    };
+    this.log(logData);
+  }
+
+  public claudeLog(
+    messages: Message[],
+    system: string | null,
+    response: {
+      model: string,
+      stop_reason: string | null;
+      usage: {
+        input_tokens: number;
+        output_tokens: number;
+      };
+      content: { type: string; text?: string; name?: string; input?: any }[];
+      error?: string;
+    },
+    tags: string[],
+    user: string | null,
+  ) {
+    const logData: LogData = {
+      model: response.model,
+      input: JSON.stringify([{ role: 'system', content: system }, ...messages]),
+      output: JSON.stringify(response.content),
+      tags,
+      user,
+      input_tokens: response.usage.input_tokens,
+      output_tokens: response.usage.output_tokens,
+      stop_reason: response.stop_reason,
     };
     this.log(logData);
   }
