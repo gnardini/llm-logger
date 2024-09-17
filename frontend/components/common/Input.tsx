@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
 interface InputProps {
   id?: string;
@@ -13,7 +13,7 @@ interface InputProps {
   className?: string;
 }
 
-export const Input: React.FC<InputProps> = ({
+export const Input = forwardRef<HTMLInputElement, InputProps>(({
   id,
   type,
   value,
@@ -24,8 +24,9 @@ export const Input: React.FC<InputProps> = ({
   readOnly,
   onClick,
   className,
-}) => (
+}, ref) => (
   <input
+    ref={ref}
     type={type}
     id={id}
     value={value}
@@ -37,4 +38,6 @@ export const Input: React.FC<InputProps> = ({
     onClick={onClick}
     className={`w-full py-1 px-1 bg-tertiary-background text-text-primary rounded-md border-2 border-transparent focus:border-primary-accent focus:outline-none shadow-sm ${className || ''}`}
   />
-);
+));
+
+Input.displayName = 'Input';
