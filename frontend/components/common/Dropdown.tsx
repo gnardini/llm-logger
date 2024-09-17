@@ -73,7 +73,7 @@ export function Dropdown<T>({
   }, [isOpen]);
 
   const filteredOptions = options.filter((option) =>
-    toString(option).toLowerCase().includes(filterText.toLowerCase())
+    toString(option).toLowerCase().includes(filterText.toLowerCase()),
   );
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -175,7 +175,12 @@ export function Dropdown<T>({
               </li>
             ))}
           </ul>
-          <div className="absolute right-0 top-0 w-[10px] h-screen max-h-60 bg-tertiary-background mt-1 rounded-full z-10">
+
+          <div
+            className={`${
+              filteredOptions.length > 6 ? '' : 'hidden'
+            } absolute right-0 top-0 w-[10px] h-screen max-h-60 bg-tertiary-background mt-1 rounded-full z-10`}
+          >
             <div
               ref={scrollThumbRef}
               className="bg-primary-background/70 rounded-full cursor-pointer mt-[1px]"
