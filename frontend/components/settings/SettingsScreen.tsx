@@ -17,18 +17,17 @@ export function SettingsScreen({ apiKeys }: Props) {
 
   return (
     <Container activeTab={Tab.Settings} showSideBar>
-      <h1>Settings</h1>
-      <Button type={ButtonType.Primary} onClick={() => setIsModalOpen(true)} className="mt-4 p-3">
-        Create project
-      </Button>
-      <CreateOrgModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
-
-      {activeOrg && (
-        <div className="mt-8">
-          <h2 className="text-2xl font-semibold mb-4">API Keys</h2>
-          <ApiKeysView organization={activeOrg} apiKeys={apiKeys} />
+      <div className="max-w-[800px] mt-6 mx-auto">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl">{activeOrg?.name} Settings</h1>
+          <Button type={ButtonType.Primary} onClick={() => setIsModalOpen(true)} className="p-3">
+            New Organization
+          </Button>
         </div>
-      )}
+        <CreateOrgModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
+
+        {activeOrg && <ApiKeysView organization={activeOrg} apiKeys={apiKeys} />}
+      </div>
     </Container>
   );
 }

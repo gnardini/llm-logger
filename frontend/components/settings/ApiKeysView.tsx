@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ApiKey } from '@type/apiKey';
 import { Organization } from '@type/organization';
@@ -6,6 +7,7 @@ import { Input } from '@frontend/components/common/Input';
 import { useUpdateApiKeyQuery } from '@frontend/queries/apiKeys/useUpdateApiKeyQuery';
 import { useDeleteApiKeyQuery } from '@frontend/queries/apiKeys/useDeleteApiKeyQuery';
 import { useCreateApiKeyQuery } from '@frontend/queries/apiKeys/useCreateApiKeyQuery';
+import { CreateApiKeyModal } from './modals/CreateApiKeyModal';
 
 interface Props {
   apiKeys: ApiKey[];
@@ -16,7 +18,7 @@ export function ApiKeysView({ apiKeys: initialApiKeys, organization }: Props) {
   const [apiKeys, setApiKeys] = useState<ApiKey[]>(initialApiKeys);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
-  const [newKeyName, setNewKeyName] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const updateApiKey = useUpdateApiKeyQuery();
   const deleteApiKey = useDeleteApiKeyQuery();
@@ -55,35 +57,28 @@ export function ApiKeysView({ apiKeys: initialApiKeys, organization }: Props) {
     }
   };
 
-  const handleCreate = async () => {
-    try {
-      const newApiKey = await createApiKey.execute({ 
-        name: newKeyName, 
-        organization_id: organization.id 
-      });
-      setApiKeys(keys => [...keys, newApiKey]);
-      setNewKeyName('');
-    } catch (error) {
-      console.error('Failed to create API key:', error);
-    }
+  const handleCreate = (newApiKey: ApiKey) => {
+    setApiKeys(keys => [...keys, newApiKey]);
+    setIsModalOpen(false);
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex items-center space-x-2 mb-4">
-        <Input
-          value={newKeyName}
-          onChange={(e) => setNewKeyName(e.target.value)}
-          placeholder="New API Key Name"
-        />
+    <div className="mt-8 space-y-4">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-semibold">API Keys</h2>
         <Button 
           type={ButtonType.Primary} 
-          onClick={handleCreate}
-          disabled={createApiKey.loading || !newKeyName.trim()}
+          onClick={() => setIsModalOpen(true)}
         >
-          Create New Key
+          New API Key
         </Button>
       </div>
+      <CreateApiKeyModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        onCreate={handleCreate}
+        organizationId={organization.id}
+      />
       {apiKeys.map((apiKey) => (
         <div key={apiKey.id} className="bg-secondary-background p-4 rounded-md">
           {editingId === apiKey.id ? (

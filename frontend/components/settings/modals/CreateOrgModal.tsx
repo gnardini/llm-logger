@@ -24,11 +24,11 @@ export function CreateOrgModal({ isOpen, onClose }: Props) {
 
   return (
     <Modal visible={isOpen} closeModal={onClose}>
-      <h2 className="text-2xl font-bold mb-4">Create New Project</h2>
+      <h2 className="text-2xl font-bold mb-4">Create New Organization</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label htmlFor="orgName" className="block mb-2">
-            Project Name
+            Organization Name
           </label>
           <Input
             id="orgName"
