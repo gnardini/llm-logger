@@ -40,7 +40,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
       disabled={disabled}
       readOnly={readOnly}
       onClick={onClick}
-      className={`w-full py-1 px-1 ${className?.includes(
+      className={`w-full ${className?.includes('p-') ? '' : 'p-1'} ${className?.includes(
         'bg-' ? '' : 'bg-tertiary-background',
       )} text-text-primary rounded-md border-2 border-transparent focus:border-primary-accent focus:outline-none shadow-sm ${
         className || ''

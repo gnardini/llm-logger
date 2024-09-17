@@ -26,6 +26,7 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
     error,
     tagsFilter,
     setTagsFilter,
+    userFilter,
     setUserFilter,
     loadMoreLogs,
     hasMoreLogs,
@@ -80,7 +81,7 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
               value={userFilterInput}
               onChange={(e) => setUserFilterInput(e.target.value)}
               placeholder="Filter by User"
-              className="mr-2 bg-secondary-background"
+              className="mr-1 p-[6px] bg-secondary-background"
             />
             <Button
               onClick={handleUserFilterSubmit}

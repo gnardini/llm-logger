@@ -85,6 +85,7 @@ export function useLogsData(initialLogs: Log[]) {
     error,
     tagsFilter,
     setTagsFilter,
+    userFilter,
     setUserFilter,
     loadMoreLogs,
     hasMoreLogs,
