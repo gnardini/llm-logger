@@ -119,7 +119,18 @@ export function Dropdown<T>({
         aria-haspopup="listbox"
         aria-expanded={isOpen}
       >
-        {selectedOption ? (
+        {isOpen && filterable ? (
+          <input
+            ref={inputRef}
+            type="text"
+            className={`bg-transparent text-text-primary w-full outline-none`}
+            value={filterText}
+            onChange={(e) => setFilterText(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Type to filter..."
+            onClick={(e) => e.stopPropagation()}
+          />
+        ) : selectedOption ? (
           renderOption(selectedOption)
         ) : (
           <p className="text-text-secondary">{placeholder}</p>
@@ -132,17 +143,6 @@ export function Dropdown<T>({
 
       {isOpen && (
         <div className="relative">
-          {filterable && (
-            <input
-              ref={inputRef}
-              type="text"
-              className={`${bgColor} text-text-primary p-2 rounded-md w-full mt-1`}
-              value={filterText}
-              onChange={(e) => setFilterText(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Type to filter..."
-            />
-          )}
           <ul
             ref={optionsRef}
             className={`absolute z-10 w-full mt-1 ${bgColor} border border-gray-700 rounded-md shadow-lg max-h-60 overflow-y-scroll scrollbar-hide`}
