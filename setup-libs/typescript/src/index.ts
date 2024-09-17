@@ -132,7 +132,7 @@ export class LLMLogger {
       });
       return response.data;
     } catch (error: any) {
-      console.error('[LLM Logger] Error logging data:', error.response.data.error);
+      console.error('[LLM Logger] Error logging data:', error);
     }
   }
 }
