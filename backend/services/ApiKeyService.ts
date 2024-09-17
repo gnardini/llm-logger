@@ -40,6 +40,11 @@ const ApiKeyService = {
 
     return OrganizationsService.getOrganizationById(key.organization_id);
   },
+
+  getApiKeysForOrganization: async (organizationId: string): Promise<ApiKey[]> => {
+    const apiKeys = await db('api_keys').where('organization_id', organizationId);
+    return apiKeys.map(transformApiKey);
+  },
 };
 
 export default ApiKeyService;

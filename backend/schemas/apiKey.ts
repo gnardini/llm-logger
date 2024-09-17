@@ -2,6 +2,7 @@ import { z } from 'zod';
 
 export const createApiKeySchema = {
   input: z.object({
+    organization_id: z.string(),
     name: z.string().nullable(),
   }),
   output: z.object({
