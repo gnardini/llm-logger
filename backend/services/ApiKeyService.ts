@@ -5,11 +5,16 @@ import { Organization } from '@type/organization';
 import crypto from 'crypto';
 import OrganizationsService from './OrganizationsService';
 
-const transformApiKey = (apiKey: any): ApiKey => ({
+const redactApiKey = (key: string): string => {
+  if (key.length <= 8) return key; // Don't redact if key is too short
+  return `${key.slice(0, 4)}...${key.slice(-4)}`;
+};
+
+const transformApiKey = (apiKey: any, showFullKey: boolean = false): ApiKey => ({
   id: apiKey.id,
   organization_id: apiKey.organization_id,
   name: apiKey.name,
-  key: apiKey.key,
+  key: showFullKey ? apiKey.key : redactApiKey(apiKey.key),
   last_used_at: apiKey.last_used_at ? toISOString(apiKey.last_used_at) : null,
   created_at: toISOString(apiKey.created_at),
   updated_at: toISOString(apiKey.updated_at),
@@ -29,7 +34,7 @@ const ApiKeyService = {
       })
       .returning('*');
 
-    return transformApiKey(apiKey);
+    return transformApiKey(apiKey, true); // Show full key when creating
   },
 
   getOrganizationByApiKey: async (apiKey: string): Promise<Organization | null> => {
@@ -46,7 +51,7 @@ const ApiKeyService = {
 
   getApiKeysForOrganization: async (organizationId: string): Promise<ApiKey[]> => {
     const apiKeys = await db('api_keys').where('organization_id', organizationId).select('*');
-    return apiKeys.map(transformApiKey);
+    return apiKeys.map(apiKey => transformApiKey(apiKey));
   },
 
   updateApiKey: async (
