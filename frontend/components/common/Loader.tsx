@@ -16,7 +16,6 @@ export function Loader({
     <span
       className={`loader ${className}`}
       style={{
-        display: 'block',
         width: size,
         height: size,
         border: `${borderWidth}px solid ${color}`,

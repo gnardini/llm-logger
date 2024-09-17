@@ -1,3 +1,4 @@
+import { Loader } from '@frontend/components/common/Loader';
 import { useAuth } from '@frontend/context/AuthContext';
 import { CrossIcon } from '@frontend/svgs/CrossIcon';
 import { gray4 } from '@frontend/utils/colors';
@@ -20,7 +21,7 @@ export function Container({
   showSideBar,
   className = 'flex-1 p-4 md:p-6 overflow-auto',
 }: ContainerProps) {
-  const { organizations, activeOrg, setActiveOrg } = useAuth();
+  const { organizations, activeOrg, setActiveOrg, loadingOrg, setLoadingOrg } = useAuth();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
@@ -38,6 +39,11 @@ export function Container({
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
+  const handleNavItemClick = (href: string) => {
+    setLoadingOrg(true);
+    window.location.href = href;
+  };
+
   const renderSidebarContent = () => (
     <>
       <Dropdown<Organization>
@@ -50,11 +56,13 @@ export function Container({
         className="w-full"
         bgColor="bg-tertiary-background"
       />
+      {loadingOrg && <Loader className="mt-4 md:hidden" />}
       <nav className="mt-8 gap-2">
         {navItems.map(({ tab, label, href }) => (
           <a
             key={tab}
-            href={href}
+            href="#"
+            onClick={() => handleNavItemClick(href)}
             className={`block py-2 px-4 ${
               activeTab === tab ? 'bg-primary-accent text-white' : 'text-text-primary'
             } rounded`}

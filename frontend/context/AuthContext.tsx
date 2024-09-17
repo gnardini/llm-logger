@@ -10,6 +10,7 @@ interface AuthContextType {
   activeOrg: Organization | null;
   setActiveOrg: (org: Organization) => void;
   loadingOrg: boolean;
+  setLoadingOrg: (loading: boolean) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -36,7 +37,7 @@ export const AuthProvider: React.FC<{
   const [user, setUser] = useState<User>(initialUser);
   const [organizations, setOrganizations] = useState<Organization[]>(initialOrganizations);
   const [activeOrg, setActiveOrgState] = useState<Organization | null>(initialActiveOrg);
-  const [loadingOrg, setLoadingOrg] = useState<boolean>(true);
+  const [loadingOrg, setLoadingOrg] = useState<boolean>(false);
 
   const setActiveOrg = (org: Organization) => {
     setLoadingOrg(true);
@@ -50,7 +51,7 @@ export const AuthProvider: React.FC<{
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, organizations, addOrganization, activeOrg, setActiveOrg, loadingOrg }}
+      value={{ user, setUser, organizations, addOrganization, activeOrg, setActiveOrg, loadingOrg, setLoadingOrg }}
     >
       {children}
     </AuthContext.Provider>
