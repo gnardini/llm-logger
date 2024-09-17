@@ -43,6 +43,12 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
     setUserFilter(userFilterInput);
   };
 
+  const handleClearFilters = () => {
+    setTagsFilter([]);
+    setUserFilter(null);
+    setUserFilterInput('');
+  };
+
   const columnHeaders: Record<ColumnName, string> = {
     time: 'Time',
     model: 'Model',
@@ -74,7 +80,7 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
               value={userFilterInput}
               onChange={(e) => setUserFilterInput(e.target.value)}
               placeholder="Filter by User"
-              className="mr-2"
+              className="mr-2 bg-secondary-background"
             />
             <Button
               onClick={handleUserFilterSubmit}
@@ -86,13 +92,20 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
               <FaArrowRight color={gray0} />
             </Button>
           </div>
+          <button
+            onClick={handleClearFilters}
+            className="mr-4 underline text-text-primary hover:text-secondary-accent"
+          >
+            Clear Filters
+          </button>
         </div>
         <FaGear
           size={36}
           color={gray0}
           onClick={() => setIsColumnModalVisible(true)}
-          className="ml-4 p-2 rounded-full hover:bg-gray-700 cursor-pointer"
+          className="p-2 rounded-full hover:bg-gray-700 cursor-pointer"
         />
+
       </div>
       {loading && <Loader className="mb-4" />}
       <div className="overflow-x-auto rounded-xl border border-primary-accent">
