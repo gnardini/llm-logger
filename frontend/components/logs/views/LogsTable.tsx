@@ -8,6 +8,7 @@ import { ColumnVisibilityModal } from '../modals/ColumnVisibilityModal';
 import { useColumnVisibility, ColumnName } from '../hooks/useColumnVisibility';
 import { FaGear } from 'react-icons/fa6';
 import { gray0 } from '@frontend/utils/colors';
+import { Loader } from '@frontend/components/common/Loader';
 
 interface LogsTableProps {
   initialLogs: Log[];
@@ -48,7 +49,6 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
             selectedOption={tagOptions.find((option) => option.value === tagsFilter[0])}
             setSelectedOption={(option) => setTagsFilter(option ? [option.value] : [])}
             placeholder={'Pick a tag'}
-            label={'Tags'}
             renderOption={(option) => <span>{option?.label}</span>}
           />
         </div>
@@ -59,6 +59,7 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
           className="ml-4 p-2 rounded-full hover:bg-gray-700 cursor-pointer"
         />
       </div>
+      {loading && <Loader className='mb-4'/>}
       <div className="overflow-x-auto rounded-xl border border-primary-accent">
         <table className="border-collapse w-full min-w-max">
           <thead>
