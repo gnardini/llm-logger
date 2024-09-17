@@ -5,6 +5,7 @@ import { Organization } from '@type/organization';
 import { useAuth } from '@frontend/context/AuthContext';
 import { FaBars } from 'react-icons/fa';
 import { CrossIcon } from '@frontend/svgs/CrossIcon';
+import { gray4 } from '@frontend/utils/colors';
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -86,13 +87,19 @@ export function Container({
 
           {/* Mobile Menu */}
           {isMobileMenuOpen && (
-            <div className="md:hidden fixed inset-0 bg-gray-900 bg-opacity-90 z-10">
-              <div className="w-[85%] h-full bg-secondary-background p-4 relative">
+            <div
+              className="md:hidden fixed inset-0 bg-gray-900 bg-opacity-90 z-10"
+              onClick={toggleMobileMenu}
+            >
+              <div
+                className="w-[85%] h-full pt-10 bg-secondary-background p-4 relative"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <button
                   onClick={toggleMobileMenu}
                   className="absolute top-4 right-4 text-text-primary"
                 >
-                  <CrossIcon size={24} />
+                  <CrossIcon size={24} color={gray4} />
                 </button>
                 {renderSidebarContent()}
               </div>
