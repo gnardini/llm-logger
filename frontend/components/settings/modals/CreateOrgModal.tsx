@@ -19,7 +19,8 @@ export function CreateOrgModal({ isOpen, onClose }: Props) {
     e.preventDefault();
     const result = await execute({ name: orgName });
     addOrganization(result.organization);
-    // TODO: Handle the result
+    window.location.href = `/settings?org_id=${result.organization.id}`;
+    onClose();
   };
 
   return (
