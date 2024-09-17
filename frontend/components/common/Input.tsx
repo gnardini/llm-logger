@@ -5,9 +5,12 @@ interface InputProps {
   type?: string;
   value: string;
   placeholder?: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   disabled?: boolean;
+  readOnly?: boolean;
+  onClick?: (e: React.MouseEvent<HTMLInputElement>) => void;
+  className?: string;
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -18,6 +21,9 @@ export const Input: React.FC<InputProps> = ({
   onChange,
   disabled,
   required = false,
+  readOnly,
+  onClick,
+  className,
 }) => (
   <input
     type={type}
@@ -27,6 +33,8 @@ export const Input: React.FC<InputProps> = ({
     onChange={onChange}
     required={required}
     disabled={disabled}
-    className="w-full py-1 px-1 bg-tertiary-background text-text-primary rounded-md border-2 border-transparent focus:border-primary-accent focus:outline-none shadow-sm"
+    readOnly={readOnly}
+    onClick={onClick}
+    className={`w-full py-1 px-1 bg-tertiary-background text-text-primary rounded-md border-2 border-transparent focus:border-primary-accent focus:outline-none shadow-sm ${className || ''}`}
   />
 );

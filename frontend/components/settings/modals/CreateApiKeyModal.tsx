@@ -4,8 +4,8 @@ import { Modal } from '@frontend/components/common/Modal';
 import { useState } from 'react';
 import { useCreateApiKeyQuery } from '@frontend/queries/apiKeys/useCreateApiKeyQuery';
 import { ApiKey } from '@type/apiKey';
-import { CopyIcon } from '@frontend/svgs/CopyIcon';
 import { useNotification } from '@frontend/context/NotificationContext';
+import { FaCopy } from 'react-icons/fa';
 
 interface Props {
   isOpen: boolean;
@@ -28,9 +28,9 @@ export function CreateApiKeyModal({ isOpen, onClose, onCreate, organizationId }:
   const handleCreate = async () => {
     if (name.trim()) {
       try {
-        const newApiKey = await createApiKey.execute({ 
-          name: name.trim(), 
-          organization_id: organizationId 
+        const newApiKey = await createApiKey.execute({
+          name: name.trim(),
+          organization_id: organizationId,
         });
         setCreatedApiKey(newApiKey);
       } catch (error) {
@@ -43,7 +43,7 @@ export function CreateApiKeyModal({ isOpen, onClose, onCreate, organizationId }:
     if (createdApiKey) {
       onCreate({
         ...createdApiKey,
-        key: redactApiKey(createdApiKey.key)
+        key: redactApiKey(createdApiKey.key),
       });
     }
     setName('');
@@ -65,7 +65,7 @@ export function CreateApiKeyModal({ isOpen, onClose, onCreate, organizationId }:
             <Button type={ButtonType.Secondary} onClick={handleClose}>
               Cancel
             </Button>
-            <Button type={ButtonType.Primary} onClick={handleCreate} disabled={createApiKey.loading}>
+            <Button type={ButtonType.Primary} onClick={handleCreate} loading={createApiKey.loading}>
               Create
             </Button>
           </div>
@@ -73,9 +73,10 @@ export function CreateApiKeyModal({ isOpen, onClose, onCreate, organizationId }:
       ) : (
         <div className="space-y-4">
           <p className="text-sm text-text-secondary">
-            Please copy your new API key. You won't be able to see it again, but you can always create new ones later.
+            Please copy your new API key. You won't be able to see it again, but you can always
+            create new ones later.
           </p>
-          <div 
+          <div
             className="flex items-center bg-secondary-background rounded cursor-pointer"
             onClick={() => {
               if (createdApiKey) {
@@ -93,7 +94,7 @@ export function CreateApiKeyModal({ isOpen, onClose, onCreate, organizationId }:
                 (e.target as HTMLInputElement).select();
               }}
             />
-            <CopyIcon className="w-5 h-5 mr-2 text-text-secondary" />
+            <FaCopy className="w-5 h-5 mx-2 text-text-secondary hover:text-primary-accent" />
           </div>
           <div className="flex justify-end">
             <Button type={ButtonType.Primary} onClick={handleClose}>
@@ -102,9 +103,7 @@ export function CreateApiKeyModal({ isOpen, onClose, onCreate, organizationId }:
           </div>
         </div>
       )}
-      {createApiKey.error && (
-        <p className="text-error mt-2">{createApiKey.error}</p>
-      )}
+      {createApiKey.error && <p className="text-error mt-2">{createApiKey.error}</p>}
     </Modal>
   );
 }

@@ -91,7 +91,7 @@ export function ApiKeysView({ apiKeys: initialApiKeys, organization }: Props) {
               <Button 
                 type={ButtonType.Primary} 
                 onClick={() => handleSave(apiKey)}
-                disabled={updateApiKey.loading}
+                loading={updateApiKey.loading}
               >
                 Save
               </Button>
@@ -115,7 +115,7 @@ export function ApiKeysView({ apiKeys: initialApiKeys, organization }: Props) {
                 <Button 
                   type={ButtonType.Warning} 
                   onClick={() => handleDelete(apiKey)}
-                  disabled={deleteApiKey.loading}
+                  loading={deleteApiKey.loading}
                 >
                   Delete
                 </Button>
