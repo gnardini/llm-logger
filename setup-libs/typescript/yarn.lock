@@ -20,6 +20,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@google/generative-ai@npm:^0.19.0":
+  version: 0.19.0
+  resolution: "@google/generative-ai@npm:0.19.0"
+  checksum: 3a16daee0762e6938ae04fde3adb3cc63dfd0cdabd42ffd7829545277af3d9303ed4275ecfeabf30d06502de6d5a40fc3d94ee0509a20d1ccbfc793d82cab749
+  languageName: node
+  linkType: hard
+
 "@types/node-fetch@npm:^2.6.4":
   version: 2.6.11
   resolution: "@types/node-fetch@npm:2.6.11"
@@ -274,6 +281,7 @@ __metadata:
   resolution: "llm-logger@workspace:."
   dependencies:
     "@anthropic-ai/sdk": "npm:^0.27.3"
+    "@google/generative-ai": "npm:^0.19.0"
     axios: "npm:^1.7.7"
     dotenv: "npm:^16.4.5"
     openai: "npm:^4.61.1"

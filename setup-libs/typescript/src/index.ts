@@ -61,7 +61,7 @@ export class LLMLogger {
     messages: Message[],
     system: string | null,
     response: {
-      model: string,
+      model: string;
       stop_reason: string | null;
       usage: {
         input_tokens: number;
@@ -86,9 +86,40 @@ export class LLMLogger {
     this.log(logData);
   }
 
-  public log(data: LogData) {
-    console.log('LLM Log:', data);
+  public geminiLog(
+    messages: Message[],
+    model: string,
+    response: {
+      candidates?: {
+        content: {
+          role: string;
+          parts: { text?: string }[];
+        };
+        finishReason?: string;
+      }[];
+      usageMetadata?: {
+        promptTokenCount: number;
+        candidatesTokenCount: number;
+      };
+    },
+    tags: string[],
+    user: string | null,
+  ) {
+    const candidate = response.candidates?.[0];
+    const logData: LogData = {
+      model: model,
+      input: JSON.stringify(messages),
+      output: JSON.stringify(candidate?.content ?? ''),
+      tags,
+      user,
+      input_tokens: response.usageMetadata?.promptTokenCount ?? 0,
+      output_tokens: response.usageMetadata?.candidatesTokenCount ?? 0,
+      stop_reason: candidate?.finishReason ?? null,
+    };
+    this.log(logData);
+  }
 
+  public log(data: LogData) {
     return this.sendToApi(data);
   }
 
@@ -101,8 +132,7 @@ export class LLMLogger {
       });
       return response.data;
     } catch (error: any) {
-      //   console.error('Error logging data:', error);
-      console.log(error.response.data.error);
+      console.error('[LLM Logger] Error logging data:', error.response.data.error);
     }
   }
 }
