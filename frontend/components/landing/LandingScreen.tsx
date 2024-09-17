@@ -113,7 +113,31 @@ export function LandingScreen({ user }: Props) {
       {/* Pricing Section */}
       <div ref={pricingSectionRef} className="w-full max-w-[1000px] mt-32 mb-10">
         <h2 className="text-4xl font-bold mb-8">Pricing</h2>
-
+        <div className="flex flex-col md:flex-row justify-center items-stretch gap-8">
+          <div className="bg-tertiary-background rounded-lg p-6 flex flex-col justify-between">
+            <div>
+              <h3 className="text-2xl font-bold mb-4">Free</h3>
+              <ul className="list-disc list-inside mb-6">
+                <li>1 user</li>
+                <li>7 days log retention</li>
+                <li>10k events per month</li>
+              </ul>
+            </div>
+            <p className="text-3xl font-bold mb-4">$0 / month</p>
+          </div>
+          <div className="bg-tertiary-background rounded-lg p-6 flex flex-col justify-between border-2 border-secondary-accent">
+            <div>
+              <h3 className="text-2xl font-bold mb-4">Pro</h3>
+              <ul className="list-disc list-inside mb-6">
+                <li>Unlimited users</li>
+                <li>1 year data retention</li>
+                <li>100k events per month</li>
+                <li>$10 per additional 100k events</li>
+              </ul>
+            </div>
+            <p className="text-3xl font-bold mb-4">$40 / month</p>
+          </div>
+        </div>
         <Button
           className="mt-10 text-2xl w-fit px-8 py-3 mx-auto transition ease-in-out duration-300 transform hover:scale-105"
           onClick={handleTryForFreeClick}
