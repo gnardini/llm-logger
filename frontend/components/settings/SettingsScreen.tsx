@@ -19,6 +19,7 @@ interface Props {
 export function SettingsScreen({ apiKeys, membershipType }: Props) {
   const [isCreateOrgModalOpen, setIsCreateOrgModalOpen] = useState(false);
   const [isManageTeamModalOpen, setIsManageTeamModalOpen] = useState(false);
+  const [showSetupInstructions, setShowSetupInstructions] = useState(false);
   const { loadingOrg, activeOrg } = useAuth();
 
   return (
@@ -61,7 +62,16 @@ export function SettingsScreen({ apiKeys, membershipType }: Props) {
         ) : (
           activeOrg && <ApiKeysView organization={activeOrg} apiKeys={apiKeys} />
         )}
-        <SetupView isSettingsScreen={true} />
+        {apiKeys.length > 0 && (
+          <Button
+            type={ButtonType.Secondary}
+            onClick={() => setShowSetupInstructions(!showSetupInstructions)}
+            className="w-fit px-3 py-2 mt-4"
+          >
+            {showSetupInstructions ? 'Hide Setup Instructions' : 'Show Setup Instructions'}
+          </Button>
+        )}
+        {(apiKeys.length === 0 || showSetupInstructions) && <SetupView isSettingsScreen={true} />}
       </div>
     </Container>
   );

@@ -95,7 +95,7 @@ await logger.log(logData);
             <button
               key={tab}
               className={`px-3 py-1 rounded-md ${
-                activeSubTab === tab ? 'bg-blue-600' : 'bg-gray-700'
+                activeSubTab === tab ? 'bg-blue-600' : 'bg-tertiary-background'
               }`}
               onClick={() => setActiveSubTab(tab)}
             >
@@ -113,7 +113,7 @@ await logger.log(logData);
           href="https://github.com/gnardini/llm-logger/tree/main/setup-libs/typescript/examples"
           target="_blank"
           rel="noopener noreferrer"
-          className="text-blue-500 hover:underline"
+          className="text-secondary-accent hover:underline"
         >
           examples on GitHub
         </a>
