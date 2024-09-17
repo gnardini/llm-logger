@@ -3,7 +3,7 @@ import { toISOString } from '@backend/services/dbHelpers';
 import OrganizationMembersService from '@backend/services/OrganizationMembersService';
 import OrganizationsService from '@backend/services/OrganizationsService';
 import { Organization } from '@type/organization';
-import { User } from '@type/user';
+import { MembershipType, User } from '@type/user';
 
 export const transformUser = (user: any): User => ({
   id: user.id,
@@ -29,7 +29,7 @@ export const UsersService = {
   ): Promise<{
     organizations: Organization[];
     activeOrg: Organization;
-    membershipType: 'owner' | 'admin' | 'member';
+    membershipType: MembershipType;
   }> {
     const organizations = await OrganizationsService.getOrganizationsForUser(user.id);
 

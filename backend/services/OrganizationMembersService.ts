@@ -81,18 +81,17 @@ const OrganizationMembersService = {
       membershipType,
     );
 
+    const org = await OrganizationsService.getOrganizationById(organizationId);
     if (userCreated) {
-      const org = await OrganizationsService.getOrganizationById(organizationId);
       const token = jwt.sign({ email: userEmail, organizationId, membershipType }, JWT_SECRET, {
         expiresIn: '7d',
       });
-      // TODO: Update welcome email
       EmailService.sendEmail(
         userEmail,
-        `You've been invited to join ${org?.name} LLM Logger`,
+        `You've been invited to join LLM Logger by ${org?.name}`,
         `Hi!
 
-You've been invited to the team at ${org?.name}.
+You've been invited to the ${org?.name} team at LLM Logger. 
 
 To accept the invitation, open the following link:
 
@@ -101,7 +100,19 @@ ${PUBLIC_APP_URL}/welcome?token=${token}
 See you soon!`,
       );
     } else {
-      // TODO: Send email
+      EmailService.sendEmail(
+        userEmail,
+        `You've been invited to ${org?.name}'s team at LLM Logger`,
+        `Hi!
+
+You've been invited to the ${org?.name} team at LLM Logger. 
+
+You can start seeing the logs at:
+
+${PUBLIC_APP_URL}/logs?org_id=${org?.id}
+
+See you soon!`,
+      );
     }
 
     return { orgUser, created: userCreated };

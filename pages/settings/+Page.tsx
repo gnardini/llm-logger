@@ -5,13 +5,13 @@ import { SettingsData } from 'pages/settings/+data';
 import { useData } from 'vike-react/useData';
 
 export default function Page() {
-  const { organizations, activeOrg, user, apiKeys } = useData<SettingsData>();
+  const { organizations, activeOrg, user, apiKeys, membershipType } = useData<SettingsData>();
 
   return (
     <>
       <NotificationProvider>
         <AuthProvider user={user} organizations={organizations} activeOrg={activeOrg}>
-          <SettingsScreen apiKeys={apiKeys} />
+          <SettingsScreen apiKeys={apiKeys} membershipType={membershipType} />
         </AuthProvider>
       </NotificationProvider>
     </>

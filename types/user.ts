@@ -7,3 +7,5 @@ export interface User {
   created_at: string;
   updated_at: string;
 }
+
+export type MembershipType = 'owner' | 'admin' | 'member';
