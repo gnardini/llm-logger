@@ -1,10 +1,11 @@
 import { secondaryAccent } from '@frontend/utils/colors';
 import { User } from '@type/user';
 import { useRef, useState } from 'react';
-import { FaArrowRight, FaChartBar, FaDatabase, FaExclamationTriangle, FaEye } from 'react-icons/fa';
+import { FaChartBar, FaDatabase, FaExclamationTriangle, FaEye } from 'react-icons/fa';
 import { AuthModal } from '../auth/AuthModal';
 import { Button } from '../common/Button';
 import { Footer } from './views/Footer';
+import { Header } from './views/Header';
 
 interface Props {
   user: User | null;
@@ -36,29 +37,7 @@ export function LandingScreen({ user }: Props) {
 
   return (
     <div className="w-full overflow-hidden flex flex-col items-center min-h-screen p-3 md:p-6 text-center relative bg-gradient-to-r from-secondary-background via-primary-background to-secondary-background">
-      <nav className="w-full max-w-[1000px] flex justify-end items-center mb-10 gap-4 md:gap-8">
-        <div className="flex gap-1 mr-auto items-center">
-          <img src={'/logo.png'} className="w-16 h-16" />
-          <h2 className="ml-1 text-2xl md:ml-2 md:text-4xl">LLM Logger</h2>
-        </div>
-        <a
-          href="https://github.com/gnardini"
-          target="_blank"
-          className="md:text-lg text-text-primary hover:underline"
-        >
-          GitHub
-        </a>
-        <button onClick={scrollToPricing} className="md:text-lg hover:underline">
-          Pricing
-        </button>
-        {user && (
-          <Button className="px-3 py-2" onClick={handleGoToApp}>
-            <div className="flex items-center">
-              Go to app <FaArrowRight className="ml-2" />
-            </div>
-          </Button>
-        )}
-      </nav>
+      <Header user={user} onScrollToPricing={scrollToPricing} onGoToApp={handleGoToApp} />
       <AuthModal isOpen={isAuthModalOpen} onClose={handleCloseAuthModal} />
       <h1 className="text-4xl md:text-6xl font-bold mx-10 mt-0 md:mt-20 bg-clip-text text-transparent bg-gradient-to-r from-secondary-accent to-purple-500">
         Keep track of your <span className="underline-secondary">AI API calls</span>
@@ -112,6 +91,17 @@ export function LandingScreen({ user }: Props) {
           {'Try for free'}
         </Button>
         {!user && <p className="mt-1 text-text-secondary mx-auto">No credit card required</p>}
+      </div>
+
+      {/* Demo Section */}
+      <Button
+        className="mt-32 text-xl px-6 py-2 transition ease-in-out duration-300 transform hover:scale-105"
+        onClick={() => (window.location.href = '/logs?org_id=01910013-7d31-7f3b-bfd9-41403c900d71')}
+      >
+        See Live Demo
+      </Button>
+      <div className="w-full max-w-[90%] md:max-w-[1000px] mt-4 mb-10 relative border border-primary-accent rounded-lg">
+        <img src="/screenshot.png" alt="LLM Logger Demo" className="w-full rounded-lg shadow-lg" />
       </div>
 
       {/* Pricing Section */}
