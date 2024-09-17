@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ApiKey } from '@type/apiKey';
+import { Organization } from '@type/organization';
 import { Button, ButtonType } from '@frontend/components/common/Button';
 import { Input } from '@frontend/components/common/Input';
 import { useUpdateApiKeyQuery } from '@frontend/queries/apiKeys/useUpdateApiKeyQuery';
@@ -8,9 +9,10 @@ import { useCreateApiKeyQuery } from '@frontend/queries/apiKeys/useCreateApiKeyQ
 
 interface Props {
   apiKeys: ApiKey[];
+  organization: Organization;
 }
 
-export function ApiKeysView({ apiKeys: initialApiKeys }: Props) {
+export function ApiKeysView({ apiKeys: initialApiKeys, organization }: Props) {
   const [apiKeys, setApiKeys] = useState<ApiKey[]>(initialApiKeys);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
@@ -27,7 +29,11 @@ export function ApiKeysView({ apiKeys: initialApiKeys }: Props) {
 
   const handleSave = async (apiKey: ApiKey) => {
     try {
-      const updatedApiKey = await updateApiKey.execute({ id: apiKey.id, name: editName });
+      const updatedApiKey = await updateApiKey.execute({ 
+        api_key_id: apiKey.id, 
+        organization_id: organization.id, 
+        name: editName 
+      });
       setApiKeys(keys => keys.map(key => key.id === apiKey.id ? updatedApiKey : key));
       setEditingId(null);
     } catch (error) {
@@ -38,7 +44,10 @@ export function ApiKeysView({ apiKeys: initialApiKeys }: Props) {
   const handleDelete = async (apiKey: ApiKey) => {
     if (window.confirm('Are you sure you want to delete this API key?')) {
       try {
-        await deleteApiKey.execute({ id: apiKey.id });
+        await deleteApiKey.execute({ 
+          api_key_id: apiKey.id, 
+          organization_id: organization.id 
+        });
         setApiKeys(keys => keys.filter(key => key.id !== apiKey.id));
       } catch (error) {
         console.error('Failed to delete API key:', error);
@@ -48,7 +57,10 @@ export function ApiKeysView({ apiKeys: initialApiKeys }: Props) {
 
   const handleCreate = async () => {
     try {
-      const newApiKey = await createApiKey.execute({ name: newKeyName });
+      const newApiKey = await createApiKey.execute({ 
+        name: newKeyName, 
+        organization_id: organization.id 
+      });
       setApiKeys(keys => [...keys, newApiKey]);
       setNewKeyName('');
     } catch (error) {
@@ -98,7 +110,7 @@ export function ApiKeysView({ apiKeys: initialApiKeys }: Props) {
                 <p className="font-semibold">{apiKey.name || 'Unnamed Key'}</p>
                 <p className="text-sm text-text-secondary">{apiKey.key}</p>
                 <p className="text-xs text-text-tertiary">
-                  Last used: {apiKey.last_used_at || 'Never'}
+                  {/* Last used: {apiKey.last_used_at || 'Never'} */}
                 </p>
               </div>
               <div className="space-x-2">
