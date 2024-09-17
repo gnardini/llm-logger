@@ -1,19 +1,29 @@
 import React from 'react';
 
 interface InputProps {
-  id: string;
-  type: string;
+  id?: string;
+  type?: string;
   value: string;
+  placeholder?: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
   disabled?: boolean;
 }
 
-export const Input: React.FC<InputProps> = ({ id, type, value, onChange, disabled, required = false }) => (
+export const Input: React.FC<InputProps> = ({
+  id,
+  type,
+  value,
+  placeholder,
+  onChange,
+  disabled,
+  required = false,
+}) => (
   <input
     type={type}
     id={id}
     value={value}
+    placeholder={placeholder}
     onChange={onChange}
     required={required}
     disabled={disabled}

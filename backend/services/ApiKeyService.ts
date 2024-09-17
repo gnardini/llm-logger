@@ -45,6 +45,22 @@ const ApiKeyService = {
     const apiKeys = await db('api_keys').where('organization_id', organizationId);
     return apiKeys.map(transformApiKey);
   },
+
+  deleteApiKey: async (apiKeyId: string, organizationId: string): Promise<boolean> => {
+    try {
+      const deletedCount = await db('api_keys')
+        .where({
+          id: apiKeyId,
+          organization_id: organizationId,
+        })
+        .del();
+
+      return deletedCount > 0;
+    } catch (error) {
+      console.error('Error deleting API key:', error);
+      return false;
+    }
+  },
 };
 
 export default ApiKeyService;
