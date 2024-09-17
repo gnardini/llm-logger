@@ -60,18 +60,22 @@ export function SettingsScreen({ apiKeys, membershipType }: Props) {
         {loadingOrg ? (
           <Loader />
         ) : (
-          activeOrg && <ApiKeysView organization={activeOrg} apiKeys={apiKeys} />
+          <>
+            {activeOrg && <ApiKeysView organization={activeOrg} apiKeys={apiKeys} />}
+            {apiKeys.length > 0 && (
+              <Button
+                type={ButtonType.Secondary}
+                onClick={() => setShowSetupInstructions(!showSetupInstructions)}
+                className="w-fit px-3 py-2 mt-4"
+              >
+                {showSetupInstructions ? 'Hide Setup Instructions' : 'Show Setup Instructions'}
+              </Button>
+            )}
+            {(apiKeys.length === 0 || showSetupInstructions) && (
+              <SetupView isSettingsScreen={true} />
+            )}
+          </>
         )}
-        {apiKeys.length > 0 && (
-          <Button
-            type={ButtonType.Secondary}
-            onClick={() => setShowSetupInstructions(!showSetupInstructions)}
-            className="w-fit px-3 py-2 mt-4"
-          >
-            {showSetupInstructions ? 'Hide Setup Instructions' : 'Show Setup Instructions'}
-          </Button>
-        )}
-        {(apiKeys.length === 0 || showSetupInstructions) && <SetupView isSettingsScreen={true} />}
       </div>
     </Container>
   );
