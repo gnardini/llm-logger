@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { ApiKey } from '@type/apiKey';
 import { Button, ButtonType } from '@frontend/components/common/Button';
 import { Input } from '@frontend/components/common/Input';
@@ -15,9 +15,16 @@ interface Props {
 export function ApiKeyView({ apiKey, organizationId, onUpdate, onDelete }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState(apiKey.name || '');
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const updateApiKey = useUpdateApiKeyQuery();
   const deleteApiKey = useDeleteApiKeyQuery();
+
+  useEffect(() => {
+    if (isEditing && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -57,6 +64,7 @@ export function ApiKeyView({ apiKey, organizationId, onUpdate, onDelete }: Props
       {isEditing ? (
         <div className="flex items-center space-x-2">
           <Input
+            ref={inputRef}
             value={editName}
             onChange={(e) => setEditName(e.target.value)}
             placeholder="API Key Name"
