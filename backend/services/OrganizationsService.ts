@@ -56,6 +56,9 @@ const OrganizationsService = {
   },
 
   getOrganizationById: async (organizationId: string): Promise<Organization | null> => {
+    if (!organizationId) {
+      return null;
+    }
     const organization = await db('organizations').where('id', organizationId).first();
 
     if (!organization) {

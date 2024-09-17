@@ -24,9 +24,9 @@ export default async function data(context: PageContextServer): Promise<LogData>
     // console.log('Would like to set header ', key);
   });
   const orgId = context.urlParsed.search.org_id;
-  const org = await OrganizationsService.getOrganizationById(orgId);
 
   if (!user) {
+    const org = await OrganizationsService.getOrganizationById(orgId);
     if (org && org.is_public) {
       const [logs, tags] = await Promise.all([
         LogService.getLogs(org.id, {}, 1),
