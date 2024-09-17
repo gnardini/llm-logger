@@ -61,7 +61,7 @@ export function Container({
         {navItems.map(({ tab, label, href }) => (
           <a
             key={tab}
-            href="#"
+            href={href}
             onClick={() => handleNavItemClick(href)}
             className={`block py-2 px-4 ${
               activeTab === tab ? 'bg-primary-accent text-white' : 'text-text-primary'
