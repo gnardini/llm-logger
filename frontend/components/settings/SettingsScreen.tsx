@@ -1,6 +1,5 @@
 import { Button, ButtonType } from '@frontend/components/common/Button';
 import { Container } from '@frontend/components/common/Container';
-import { useGetApiKeysQuery } from '@frontend/queries/apiKeys/useGetApiKeysQuery';
 import { ApiKey } from '@type/apiKey';
 import { Tab } from '@type/tabs';
 import { useState } from 'react';
@@ -13,8 +12,6 @@ interface Props {
 
 export function SettingsScreen({ apiKeys }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const getApiKeys = useGetApiKeysQuery();
 
   return (
     <Container activeTab={Tab.Settings} showSideBar>

@@ -1,4 +1,4 @@
-import { db } from '@backend/db/db';
+import { db, getDb } from '@backend/db/db';
 import { toISOString } from '@backend/services/dbHelpers';
 import { ApiKey } from '@type/apiKey';
 import { Organization } from '@type/organization';
@@ -44,6 +44,27 @@ const ApiKeyService = {
   getApiKeysForOrganization: async (organizationId: string): Promise<ApiKey[]> => {
     const apiKeys = await db('api_keys').where('organization_id', organizationId);
     return apiKeys.map(transformApiKey);
+  },
+
+  updateApiKey: async (
+    apiKeyId: string,
+    organizationId: string,
+    name: string,
+  ): Promise<ApiKey | null> => {
+    try {
+      const [updatedApiKey] = await db('api_keys')
+        .where({
+          id: apiKeyId,
+          organization_id: organizationId,
+        })
+        .update({ name, updated_at: getDb().fn.now() })
+        .returning('*');
+
+      return updatedApiKey ? transformApiKey(updatedApiKey) : null;
+    } catch (error) {
+      console.error('Error updating API key:', error);
+      return null;
+    }
   },
 
   deleteApiKey: async (apiKeyId: string, organizationId: string): Promise<boolean> => {
