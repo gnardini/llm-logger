@@ -10,6 +10,7 @@ import { FaGear, FaArrowRight } from 'react-icons/fa6';
 import { gray0 } from '@frontend/utils/colors';
 import { Loader } from '@frontend/components/common/Loader';
 import { Input } from '@frontend/components/common/Input';
+import { Label } from '@frontend/components/common/Label';
 
 interface LogsTableProps {
   initialLogs: Log[];
@@ -76,22 +77,25 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
             toString={(option) => option!.label}
           />
 
-          <div className="flex items-center mb-2 sm:mb-0">
-            <Input
-              value={userFilterInput}
-              onChange={(e) => setUserFilterInput(e.target.value)}
-              placeholder="Filter by User"
-              className="mr-1 p-[6px] bg-secondary-background"
-            />
-            <Button
-              onClick={handleUserFilterSubmit}
-              disabled={!userFilterInput}
-              className={`p-2 rounded-full ${
-                userFilterInput ? 'bg-primary-accent hover:bg-secondary-accent' : 'bg-gray-700'
-              }`}
-            >
-              <FaArrowRight color={gray0} />
-            </Button>
+          <div className="flex flex-col mb-2 sm:mb-0">
+            <Label>Filter by User</Label>
+            <div className="flex items-center">
+              <Input
+                value={userFilterInput}
+                onChange={(e) => setUserFilterInput(e.target.value)}
+                placeholder="User..."
+                className="mr-1 p-[6px] bg-secondary-background"
+              />
+              <Button
+                onClick={handleUserFilterSubmit}
+                disabled={!userFilterInput}
+                className={`p-2 rounded-full ${
+                  userFilterInput ? 'bg-primary-accent hover:bg-secondary-accent' : 'bg-gray-700'
+                }`}
+              >
+                <FaArrowRight color={gray0} />
+              </Button>
+            </div>
           </div>
           {(tagsFilter.length > 0 || userFilter) && (
             <button
