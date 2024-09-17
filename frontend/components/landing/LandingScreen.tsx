@@ -94,7 +94,11 @@ export function LandingScreen({ user }: Props) {
             </p>
           </li>
           <li className="flex flex-row md:items-center">
-            <FaExclamationTriangle size={24} color={secondaryAccent} className="mt-1 mr-3 shrink-0" />
+            <FaExclamationTriangle
+              size={24}
+              color={secondaryAccent}
+              className="mt-1 mr-3 shrink-0"
+            />
             <p className="text-left">
               Identify prompting issues to increase your AI integration's{' '}
               <span className="underline-secondary mx-1">quality</span>.
@@ -111,28 +115,28 @@ export function LandingScreen({ user }: Props) {
       </div>
 
       {/* Pricing Section */}
-      <div ref={pricingSectionRef} className="w-full max-w-[1000px] mt-32 mb-10">
+      <div ref={pricingSectionRef} className="w-full max-w-[90%] md:max-w-[800px] mt-32 mb-10">
         <h2 className="text-4xl font-bold mb-8">Pricing</h2>
         <div className="flex flex-col md:flex-row justify-center items-stretch gap-8">
-          <div className="bg-tertiary-background rounded-lg p-6 flex flex-col justify-between flex-1">
+          <div className="bg-tertiary-background rounded-lg p-6 flex flex-col justify-between flex-1 max-w-[350px]">
             <div>
-              <h3 className="text-2xl font-bold mb-4">Free</h3>
+              <h3 className="text-3xl font-bold mb-4 text-secondary-accent">Free</h3>
               <ul className="list-disc list-outside mb-6 pl-5">
-                <li>1 user</li>
-                <li>7 days log retention</li>
-                <li>10k events per month</li>
+                <li className="text-start">1 user</li>
+                <li className="text-start">7 days log retention</li>
+                <li className="text-start">10k events per month</li>
               </ul>
             </div>
             <p className="text-3xl font-bold mb-4">$0 / month</p>
           </div>
-          <div className="bg-tertiary-background rounded-lg p-6 flex flex-col justify-between border-2 border-secondary-accent flex-1">
+          <div className="bg-tertiary-background rounded-lg p-6 flex flex-col justify-between border-2 border-secondary-accent flex-1 max-w-[350px]">
             <div>
-              <h3 className="text-2xl font-bold mb-4">Pro</h3>
+              <h3 className="text-3xl font-bold mb-4 text-secondary-accent">Pro</h3>
               <ul className="list-disc list-outside mb-6 pl-5">
-                <li>Unlimited users</li>
-                <li>1 year log retention</li>
-                <li>100k events per month</li>
-                <li>$10 per additional 100k events</li>
+                <li className="text-start">Unlimited users</li>
+                <li className="text-start">1 year log retention</li>
+                <li className="text-start">100k events per month</li>
+                <li className="text-start">$10 per additional 100k events</li>
               </ul>
             </div>
             <p className="text-3xl font-bold mb-4">$40 / month</p>
