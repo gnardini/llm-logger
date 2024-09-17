@@ -1,3 +1,4 @@
+
 import { Button } from '@frontend/components/common/Button';
 import { Dropdown } from '@frontend/components/common/Dropdown';
 import { useLogsData } from '@frontend/components/logs/data/useLogsData';
@@ -63,10 +64,10 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
 
   return (
     <div>
-      <div className="mb-4 flex flex-wrap justify-between items-center">
-        <div className="flex-grow mr-4 mb-2 sm:mb-0 flex items-end gap-4">
+      <div className="mb-4 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+        <div className="flex-grow w-full sm:w-auto mr-0 sm:mr-4 mb-4 sm:mb-0 flex flex-col sm:flex-row sm:items-end gap-4">
           <Dropdown
-            className="w-fit mt-2 sm:min-w-[200px]"
+            className="w-full sm:w-fit mt-2 sm:min-w-[200px]"
             options={tagOptions}
             selectedOption={tagOptions.find((option) => option.value === tagsFilter[0])}
             setSelectedOption={(option) => setTagsFilter(option ? [option.value] : [])}
@@ -77,14 +78,14 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
             toString={(option) => option!.label}
           />
 
-          <div className="flex flex-col mb-2 sm:mb-0">
+          <div className="flex flex-col w-full sm:w-auto">
             <Label>Filter by User</Label>
             <div className="flex items-center">
               <Input
                 value={userFilterInput}
                 onChange={(e) => setUserFilterInput(e.target.value)}
                 placeholder="User..."
-                className="mr-1 p-[6px] bg-secondary-background"
+                className="mr-1 p-[6px] bg-secondary-background flex-grow sm:flex-grow-0"
               />
               <Button
                 onClick={handleUserFilterSubmit}
@@ -110,9 +111,8 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
           size={36}
           color={gray0}
           onClick={() => setIsColumnModalVisible(true)}
-          className="p-2 rounded-full hover:bg-gray-700 cursor-pointer"
+          className="p-2 rounded-full hover:bg-gray-700 cursor-pointer self-end sm:self-auto"
         />
-
       </div>
       {loading && <Loader className="mb-4" />}
       <div className="overflow-x-auto rounded-xl border border-primary-accent">

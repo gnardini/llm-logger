@@ -21,7 +21,7 @@ export function LogsScreen({ activeOrg, logs, tags, membershipType }: LogsScreen
   return (
     <Container activeTab={Tab.Logs} showSideBar={membershipType !== 'guest'}>
       {membershipType === 'guest' && <LiveDemoBanner />}
-      <div className={`${membershipType === 'guest' ? 'mt-20' : ''}`}>
+      <div className={`${membershipType === 'guest' ? 'mt-28 md:mt-20' : ''}`}>
         <h1 className="text-3xl mt-12 md:mt-6">{activeOrg.name} Logs</h1>
         {loadingOrg ? (
           <Loader />
