@@ -107,6 +107,18 @@ await logger.log(logData);
           <code>{getExampleCode(activeSubTab)}</code>
         </pre>
       </div>
+      <p className="mt-4">
+        For more examples, check out our{' '}
+        <a
+          href="https://github.com/gnardini/llm-logger/tree/main/setup-libs/typescript/examples"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-blue-500 hover:underline"
+        >
+          examples on GitHub
+        </a>
+        .
+      </p>
     </div>
   );
 };

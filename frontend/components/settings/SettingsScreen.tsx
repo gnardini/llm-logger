@@ -61,7 +61,7 @@ export function SettingsScreen({ apiKeys, membershipType }: Props) {
         ) : (
           activeOrg && <ApiKeysView organization={activeOrg} apiKeys={apiKeys} />
         )}
-        <SetupView />
+        <SetupView isSettingsScreen={true} />
       </div>
     </Container>
   );
