@@ -1,0 +1,16 @@
+{
+  "name": "llm-logger",
+  "version": "0.0.1",
+  "description": "",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "openai": "^4.61.1"
+  }
+}
