@@ -43,12 +43,13 @@ const openai = new OpenAI({
   apiKey: 'your-openai-api-key',
 });
 
+const messages = [{ role: 'user', content: 'Hello, how are you?' }]
 const completion = await openai.chat.completions.create({
-  model: 'gpt-3.5-turbo',
-  messages: [{ role: 'user', content: 'Hello, how are you?' }],
+  model: 'gpt-4o-mini',
+  messages,
 });
 
-await logger.logOpenAI(completion);
+await logger.openaiLog(messages, chatCompletion, ['openai-example'], null);
 ```
 
 ### Claude (Anthropic)
@@ -62,13 +63,16 @@ const anthropic = new Anthropic({
   apiKey: 'your-anthropic-api-key',
 });
 
-const completion = await anthropic.completions.create({
-  model: 'claude-2',
-  prompt: 'Human: Hello, how are you?\nAssistant:',
-  max_tokens_to_sample: 300,
+const system = 'You are a helpful assistant';
+const messages = [{ role: 'user', content: 'Hello, how are you?' }];
+const completion = await anthropic.messages.create({
+  model: 'claude-3-haiku-20240307',
+  system,
+  messages,
+  max_tokens: 4096,
 });
 
-await logger.logClaude(completion);
+await logger.claudeLog(messages, system, completion, ['claude-example'], null);
 ```
 
 ### Gemini (Google)
@@ -78,26 +82,15 @@ To log Gemini API calls:
 ```typescript
 import { GoogleGenerativeAI } from '@google/generative-ai';
 
+const model = 'gemini-1.5-flash-latest';
 const genAI = new GoogleGenerativeAI('your-google-api-key');
-const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+const geminiModel = genAI.getGenerativeModel({ model });
 
-const result = await model.generateContent('Hello, how are you?');
-const response = await result.response;
+const messages = [{ role: 'user', content: 'Hello, how are you?' }];
+const result = await geminiModel.generateContent(messages[0].content);
+const response = result.response;
 
-await logger.logGemini(response);
-```
-
-### Custom LLM
-
-For other LLMs or custom implementations, you can use the general `log` method:
-
-```typescript
-await logger.log({
-  model: 'custom-model-name',
-  prompt: 'Your prompt here',
-  completion: 'The model\'s response here',
-  // Add any other relevant information
-});
+await logger.geminiLog(messages, model, geminiResponse, ['gemini-example'], null);
 ```
 
 ## Benefits
@@ -107,6 +100,5 @@ Using LLM Logger allows you to:
 1. Keep track of all your AI API calls in one place.
 2. Analyze usage patterns and optimize your API usage.
 3. Debug and improve your AI-powered applications more effectively.
-4. Maintain a comprehensive log for auditing and compliance purposes.
 
 For more information and advanced usage, visit [LLM Logger](https://llmlogger.com/).
