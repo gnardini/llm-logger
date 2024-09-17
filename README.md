@@ -6,7 +6,7 @@ Building an AI product is hard. AIs are unreliable, don't always follow output f
         
 We help you keep track of how your product is working in the wild and help you improve it.
 
-![Demo](assets/screenshot.png)
+![Demo](public/screenshot.png)
 *LLM Logger Preview*
 
 ## Prerequisites
