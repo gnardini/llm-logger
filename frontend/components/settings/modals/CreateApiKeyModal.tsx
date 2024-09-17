@@ -1,7 +1,7 @@
 import { Button, ButtonType } from '@frontend/components/common/Button';
 import { Input } from '@frontend/components/common/Input';
 import { Modal } from '@frontend/components/common/Modal';
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useCreateApiKeyQuery } from '@frontend/queries/apiKeys/useCreateApiKeyQuery';
 import { ApiKey } from '@type/apiKey';
 import { useNotification } from '@frontend/context/NotificationContext';
@@ -24,6 +24,18 @@ export function CreateApiKeyModal({ isOpen, onClose, onCreate, organizationId }:
   const [createdApiKey, setCreatedApiKey] = useState<ApiKey | null>(null);
   const createApiKey = useCreateApiKeyQuery();
   const { showNotification } = useNotification();
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    console.log({
+      isOpen,
+      c: inputRef.current,
+    });
+    if (isOpen && inputRef.current) {
+      console.log('focus')
+      inputRef.current.focus();
+    }
+  }, [isOpen]);
 
   const handleCreate = async () => {
     try {
@@ -55,6 +67,7 @@ export function CreateApiKeyModal({ isOpen, onClose, onCreate, organizationId }:
       {!createdApiKey ? (
         <div className="space-y-4">
           <Input
+            ref={inputRef}
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="API Key Name (optional)"
