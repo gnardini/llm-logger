@@ -22,9 +22,9 @@ export function SettingsScreen({ apiKeys }: Props) {
   return (
     <Container activeTab={Tab.Settings} showSideBar>
       <div className="max-w-[800px] mt-6 mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl">{activeOrg?.name} Settings</h1>
-          <Button type={ButtonType.Primary} onClick={() => setIsModalOpen(true)} className="p-3">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8">
+          <h1 className="text-3xl mb-4 md:mb-0">{activeOrg?.name} Settings</h1>
+          <Button type={ButtonType.Primary} onClick={() => setIsModalOpen(true)} className="w-fit px-3 py-2">
             New Organization
           </Button>
         </div>
