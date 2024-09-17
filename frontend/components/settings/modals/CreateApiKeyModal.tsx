@@ -26,16 +26,14 @@ export function CreateApiKeyModal({ isOpen, onClose, onCreate, organizationId }:
   const { showNotification } = useNotification();
 
   const handleCreate = async () => {
-    if (name.trim()) {
-      try {
-        const newApiKey = await createApiKey.execute({
-          name: name.trim(),
-          organization_id: organizationId,
-        });
-        setCreatedApiKey(newApiKey);
-      } catch (error) {
-        console.error('Failed to create API key:', error);
-      }
+    try {
+      const newApiKey = await createApiKey.execute({
+        name: name.trim(),
+        organization_id: organizationId,
+      });
+      setCreatedApiKey(newApiKey);
+    } catch (error) {
+      console.error('Failed to create API key:', error);
     }
   };
 
@@ -92,6 +90,10 @@ export function CreateApiKeyModal({ isOpen, onClose, onCreate, organizationId }:
               onClick={(e) => {
                 e.stopPropagation();
                 (e.target as HTMLInputElement).select();
+                if (createdApiKey) {
+                  navigator.clipboard.writeText(createdApiKey.key);
+                  showNotification('API key copied to clipboard', 'success');
+                }
               }}
             />
             <FaCopy className="w-5 h-5 mx-2 text-text-secondary hover:text-primary-accent" />
