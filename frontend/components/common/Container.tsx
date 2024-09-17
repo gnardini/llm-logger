@@ -1,11 +1,11 @@
-import { Tab } from '@type/tabs';
-import React, { useState } from 'react';
-import { Dropdown } from './Dropdown';
-import { Organization } from '@type/organization';
 import { useAuth } from '@frontend/context/AuthContext';
-import { FaBars } from 'react-icons/fa';
 import { CrossIcon } from '@frontend/svgs/CrossIcon';
 import { gray4 } from '@frontend/utils/colors';
+import { Organization } from '@type/organization';
+import { Tab } from '@type/tabs';
+import React, { useState } from 'react';
+import { FaBars } from 'react-icons/fa';
+import { Dropdown } from './Dropdown';
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -29,8 +29,7 @@ export function Container({
   ];
 
   const onOrganizationChange = (newActiveOrg: Organization) => {
-    // TODO: Fix onPageTransitionStart being called and uncomment
-    // setActiveOrg(newActiveOrg);
+    setActiveOrg(newActiveOrg);
     const href = navItems.find((item) => item.tab === activeTab)?.href;
     window.location.href = `${href}?org_id=${newActiveOrg.id}`;
   };

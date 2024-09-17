@@ -14,7 +14,7 @@ interface LogsScreenProps {
 export function LogsScreen({ activeOrg, logs, tags }: LogsScreenProps) {
   return (
     <Container activeTab={Tab.Logs} showSideBar>
-      <h1 className="text-3xl mb-4">{activeOrg.name} Logs</h1>
+      <h1 className="text-3xl mt-12 md:mt-6">{activeOrg.name} Logs</h1>
       <LogsTable initialLogs={logs.logs} tags={tags} />
     </Container>
   );
