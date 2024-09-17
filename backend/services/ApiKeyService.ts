@@ -10,7 +10,7 @@ const transformApiKey = (apiKey: any): ApiKey => ({
   organization_id: apiKey.organization_id,
   name: apiKey.name,
   key: apiKey.key,
-  last_used_at: null,
+  last_used_at: apiKey.last_used_at ? toISOString(apiKey.last_used_at) : null,
   created_at: toISOString(apiKey.created_at),
   updated_at: toISOString(apiKey.updated_at),
 });
@@ -43,8 +43,16 @@ const ApiKeyService = {
   },
 
   getApiKeysForOrganization: async (organizationId: string): Promise<ApiKey[]> => {
-    const apiKeys = await db('api_keys').where('organization_id', organizationId);
-    return apiKeys.map(transformApiKey);
+    const apiKeys = await getDb().raw(
+      `SELECT ak.*, MAX(l.created_at) as last_used_at
+FROM api_keys ak
+LEFT JOIN logs l ON ak.id = l.api_key_id
+WHERE ak.organization_id = ?
+GROUP BY ak.id`,
+      [organizationId],
+    );
+
+    return apiKeys.rows.map(transformApiKey);
   },
 
   updateApiKey: async (
@@ -53,13 +61,17 @@ const ApiKeyService = {
     name: string,
   ): Promise<ApiKey | null> => {
     try {
-      const [updatedApiKey] = await db('api_keys')
-        .where({
-          id: apiKeyId,
-          organization_id: organizationId,
-        })
-        .update({ name, updated_at: getDb().fn.now() })
-        .returning('*');
+      const [updatedApiKey] = await getDb().raw(
+        `UPDATE api_keys
+SET name = ?, updated_at = NOW()
+WHERE id = ? AND organization_id = ?
+RETURNING *, (
+  SELECT MAX(created_at)
+  FROM logs
+  WHERE api_key_id = api_keys.id
+) as last_used_at`,
+        [name, apiKeyId, organizationId],
+      );
 
       return updatedApiKey ? transformApiKey(updatedApiKey) : null;
     } catch (error) {
