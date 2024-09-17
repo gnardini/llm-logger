@@ -27,7 +27,7 @@ import { LLMLogger } from 'llm-logger';
 Then, create an instance of LLMLogger with your API key:
 
 ```typescript
-const logger = new LLMLogger('your-api-key-here');
+const logger = new LLMLogger({ apiKey: 'your-api-key-here' });
 ```
 
 ## Usage
