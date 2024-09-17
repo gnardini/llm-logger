@@ -4,6 +4,8 @@ import { Modal } from '@frontend/components/common/Modal';
 import { useState } from 'react';
 import { useCreateApiKeyQuery } from '@frontend/queries/apiKeys/useCreateApiKeyQuery';
 import { ApiKey } from '@type/apiKey';
+import { CopyIcon } from '@frontend/svgs/CopyIcon';
+import { useNotification } from '@frontend/context/NotificationContext';
 
 interface Props {
   isOpen: boolean;
@@ -21,6 +23,7 @@ export function CreateApiKeyModal({ isOpen, onClose, onCreate, organizationId }:
   const [name, setName] = useState('');
   const [createdApiKey, setCreatedApiKey] = useState<ApiKey | null>(null);
   const createApiKey = useCreateApiKeyQuery();
+  const { showNotification } = useNotification();
 
   const handleCreate = async () => {
     if (name.trim()) {
@@ -70,13 +73,28 @@ export function CreateApiKeyModal({ isOpen, onClose, onCreate, organizationId }:
       ) : (
         <div className="space-y-4">
           <p className="text-sm text-text-secondary">
-            Please copy your new API key. You won't be able to see it again, but you can always create new ones.
+            Please copy your new API key. You won't be able to see it again, but you can always create new ones later.
           </p>
-          <Input
-            value={createdApiKey.key}
-            readOnly
-            onClick={(e) => (e.target as HTMLInputElement).select()}
-          />
+          <div 
+            className="flex items-center bg-secondary-background rounded cursor-pointer"
+            onClick={() => {
+              if (createdApiKey) {
+                navigator.clipboard.writeText(createdApiKey.key);
+                showNotification('API key copied to clipboard', 'success');
+              }
+            }}
+          >
+            <Input
+              value={createdApiKey.key}
+              readOnly
+              className="flex-grow border-none"
+              onClick={(e) => {
+                e.stopPropagation();
+                (e.target as HTMLInputElement).select();
+              }}
+            />
+            <CopyIcon className="w-5 h-5 mr-2 text-text-secondary" />
+          </div>
           <div className="flex justify-end">
             <Button type={ButtonType.Primary} onClick={handleClose}>
               Close
