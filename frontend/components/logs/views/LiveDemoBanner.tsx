@@ -14,8 +14,8 @@ export function LiveDemoBanner() {
   };
 
   return (
-    <div className="bg-secondary-background p-4 rounded-lg mb-6 flex flex-row gap-4 items-center justify-center">
-      <p className="text-lg md:text-xl mb-2">This is a live demo of LLM Logger.</p>
+    <div className="fixed top-0 left-0 right-0 bg-secondary-background p-4 flex flex-row gap-4 items-center justify-center z-50">
+      <p className="text-lg md:text-xl">This is a live demo of LLM Logger.</p>
       <Button onClick={handleRegisterClick}>Register for free</Button>
       <AuthModal isOpen={isAuthModalOpen} onClose={handleCloseAuthModal} />
     </div>
