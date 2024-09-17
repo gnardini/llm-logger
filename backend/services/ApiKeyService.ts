@@ -10,6 +10,7 @@ const transformApiKey = (apiKey: any): ApiKey => ({
   organization_id: apiKey.organization_id,
   name: apiKey.name,
   key: apiKey.key,
+  last_used_at: null,
   created_at: toISOString(apiKey.created_at),
   updated_at: toISOString(apiKey.updated_at),
 });

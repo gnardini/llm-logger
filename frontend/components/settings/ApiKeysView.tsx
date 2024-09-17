@@ -110,7 +110,7 @@ export function ApiKeysView({ apiKeys: initialApiKeys, organization }: Props) {
                 <p className="font-semibold">{apiKey.name || 'Unnamed Key'}</p>
                 <p className="text-sm text-text-secondary">{apiKey.key}</p>
                 <p className="text-xs text-text-tertiary">
-                  {/* Last used: {apiKey.last_used_at || 'Never'} */}
+                  Last used: {apiKey.last_used_at || 'Never'}
                 </p>
               </div>
               <div className="space-x-2">
