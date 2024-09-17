@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { ApiKeysView } from './ApiKeysView';
 import { CreateOrgModal } from './modals/CreateOrgModal';
 import { ManageTeamModal } from './modals/ManageTeamModal';
+import { SetupView } from '@frontend/components/settings/views/SetupView';
 
 interface Props {
   apiKeys: ApiKey[];
@@ -60,6 +61,7 @@ export function SettingsScreen({ apiKeys, membershipType }: Props) {
         ) : (
           activeOrg && <ApiKeysView organization={activeOrg} apiKeys={apiKeys} />
         )}
+        <SetupView />
       </div>
     </Container>
   );
