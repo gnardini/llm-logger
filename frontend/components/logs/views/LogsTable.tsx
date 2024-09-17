@@ -78,7 +78,7 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
             toString={(option) => option!.label}
           />
 
-          <div className="flex flex-col w-full sm:w-auto">
+          <div className="flex flex-col w-full sm:w-auto sm:justify-end">
             <Label>Filter by User</Label>
             <div className="flex items-center">
               <Input
