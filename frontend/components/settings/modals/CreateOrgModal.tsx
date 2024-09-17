@@ -1,6 +1,7 @@
 import { Button, ButtonType } from '@frontend/components/common/Button';
 import { Input } from '@frontend/components/common/Input';
 import { Modal } from '@frontend/components/common/Modal';
+import { useAuth } from '@frontend/context/AuthContext';
 import { useCreateOrgQuery } from '@frontend/queries/organizations/useCreateOrgQuery';
 import { useState } from 'react';
 
@@ -12,13 +13,13 @@ interface Props {
 export function CreateOrgModal({ isOpen, onClose }: Props) {
   const [orgName, setOrgName] = useState('');
   const { execute, loading, error } = useCreateOrgQuery();
+  const { addOrganization } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = await execute({ name: orgName });
-    if (result?.organization) {
-      window.location.href = `/logs?org_id=${result.organization.id}`;
-    }
+    addOrganization(result.organization);
+    // TODO: Handle the result
   };
 
   return (
