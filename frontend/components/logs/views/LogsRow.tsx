@@ -32,9 +32,14 @@ export function LogsRow({ log, visibleColumns }: LogsRowProps) {
   const handleRowClick = async () => {
     setExpanded(!expanded);
     if (!logDetails && !expanded) {
-      const result = await execute({ id: log.id });
-      if (result) {
-        setLogDetails(result);
+      try {
+        const result = await execute({ id: log.id });
+        if (result) {
+          setLogDetails(result);
+        }
+      } catch (error) {
+        console.error('Error fetching log details:', error);
+        setExpanded(false);
       }
     }
   };

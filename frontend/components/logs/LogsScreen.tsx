@@ -15,11 +15,11 @@ interface LogsScreenProps {
   tags: string[];
 }
 
-export function LogsScreen({ activeOrg, logs, tags }: LogsScreenProps) {
+export function LogsScreen({ activeOrg, logs, tags, membershipType }: LogsScreenProps) {
   const { loadingOrg } = useAuth();
 
   return (
-    <Container activeTab={Tab.Logs} showSideBar>
+    <Container activeTab={Tab.Logs} showSideBar={membershipType !== 'guest'}>
       <h1 className="text-3xl mt-12 md:mt-6">{activeOrg.name} Logs</h1>
       {loadingOrg ? (
         <Loader />

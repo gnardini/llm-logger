@@ -8,6 +8,7 @@ export const createOrganizationSchema = {
     organization: z.object({
       id: z.string(),
       name: z.string(),
+      is_public: z.boolean(),
       created_at: z.string(),
       updated_at: z.string(),
     }),

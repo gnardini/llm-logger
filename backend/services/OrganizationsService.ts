@@ -6,6 +6,7 @@ import { uuidv7 } from 'uuidv7';
 const transformOrganization = (org: any): Organization => ({
   id: org.id,
   name: org.name,
+  is_public: org.is_public,
   created_at: toISOString(org.created_at),
   updated_at: toISOString(org.updated_at),
 });
