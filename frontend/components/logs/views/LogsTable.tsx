@@ -92,12 +92,14 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
               <FaArrowRight color={gray0} />
             </Button>
           </div>
-          <button
-            onClick={handleClearFilters}
-            className="mr-4 underline text-text-primary hover:text-secondary-accent"
-          >
-            Clear Filters
-          </button>
+          {(tagsFilter.length > 0 || userFilter) && (
+            <button
+              onClick={handleClearFilters}
+              className="mr-4 underline text-text-primary hover:text-secondary-accent"
+            >
+              Clear Filters
+            </button>
+          )}
         </div>
         <FaGear
           size={36}
