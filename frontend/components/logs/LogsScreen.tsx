@@ -6,10 +6,11 @@ import { useAuth } from '@frontend/context/AuthContext';
 import { PaginatedLogs } from '@type/log';
 import { Organization } from '@type/organization';
 import { Tab } from '@type/tabs';
+import { MembershipType } from '@type/user';
 
 interface LogsScreenProps {
   activeOrg: Organization;
-  membershipType: 'owner' | 'admin' | 'member';
+  membershipType: MembershipType;
   logs: PaginatedLogs;
   tags: string[];
 }

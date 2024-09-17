@@ -5,7 +5,7 @@ import TagsService from '@backend/services/TagsService';
 import { UsersService } from '@backend/services/UsersService';
 import { PaginatedLogs } from '@type/log';
 import { Organization } from '@type/organization';
-import { User } from '@type/user';
+import { MembershipType, User } from '@type/user';
 import { redirect } from 'vike/abort';
 import type { PageContextServer } from 'vike/types';
 
@@ -13,7 +13,7 @@ export type LogData = {
   user: User;
   organizations: Organization[];
   activeOrg: Organization;
-  membershipType: 'owner' | 'admin' | 'member';
+  membershipType: MembershipType;
   logs: PaginatedLogs;
   tags: string[];
 };

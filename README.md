@@ -1,6 +1,6 @@
 # LLM Logger
 
-LLM Logger is a tool that helps you keep track of your AI API calls
+[LLM Logger](https://llmlogger.com) is a tool that helps you keep track of your AI API calls
         
 Building an AI product is hard. AIs are unreliable, don't always follow output format, and can behave in surprising and unexpected ways, especially with free-form user input.
         

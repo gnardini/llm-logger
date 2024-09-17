@@ -5,6 +5,7 @@ import { EmailService } from '@backend/services/EmailService';
 import OrganizationsService from '@backend/services/OrganizationsService';
 import { UsersService } from '@backend/services/UsersService';
 import { OrgUser } from '@type/organization';
+import { MembershipType } from '@type/user';
 import jwt from 'jsonwebtoken';
 import { uuidv7 } from 'uuidv7';
 
@@ -28,10 +29,7 @@ const OrganizationMembersService = {
     return members.map(transformOrgUser);
   },
 
-  getMembershipType: async (
-    organizationId: string,
-    userId: string,
-  ): Promise<'owner' | 'admin' | 'member'> => {
+  getMembershipType: async (organizationId: string, userId: string): Promise<MembershipType> => {
     const orgUser = await db('user_organizations')
       .where({ organization_id: organizationId, user_id: userId })
       .select('membership_type')

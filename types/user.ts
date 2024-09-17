@@ -8,4 +8,4 @@ export interface User {
   updated_at: string;
 }
 
-export type MembershipType = 'owner' | 'admin' | 'member';
+export type MembershipType = 'owner' | 'admin' | 'member' | 'guest';
