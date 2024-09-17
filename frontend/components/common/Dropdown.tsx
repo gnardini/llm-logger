@@ -12,6 +12,8 @@ interface DropdownProps<T> {
   label?: string;
   bgColor?: string;
   className?: string;
+  filterable?: boolean;
+  toString?: (option: T) => string;
 }
 
 export function Dropdown<T>({
@@ -23,16 +25,21 @@ export function Dropdown<T>({
   label,
   bgColor = 'bg-secondary-background',
   className = 'w-full sm:w-fit sm:min-w-[200px]',
+  filterable = false,
+  toString = (option) => String(option),
 }: DropdownProps<T>) {
   const [isOpen, setIsOpen] = useState(false);
+  const [filterText, setFilterText] = useState('');
   const dropdownRef = useRef<HTMLDivElement>(null);
   const optionsRef = useRef<HTMLUListElement>(null);
   const scrollThumbRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
+        setFilterText('');
       }
     };
 
@@ -65,11 +72,33 @@ export function Dropdown<T>({
     };
   }, [isOpen]);
 
+  const filteredOptions = options.filter((option) =>
+    toString(option).toLowerCase().includes(filterText.toLowerCase())
+  );
+
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === 'Enter' || event.key === ' ') {
-      setIsOpen(!isOpen);
+      if (!isOpen) {
+        setIsOpen(true);
+        if (filterable && inputRef.current) {
+          setTimeout(() => inputRef.current?.focus(), 0);
+        }
+      }
     } else if (event.key === 'Escape') {
       setIsOpen(false);
+      setFilterText('');
+    } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      if (!isOpen) {
+        setIsOpen(true);
+      } else {
+        const currentIndex = filteredOptions.indexOf(selectedOption as T);
+        const nextIndex =
+          event.key === 'ArrowDown'
+            ? (currentIndex + 1) % filteredOptions.length
+            : (currentIndex - 1 + filteredOptions.length) % filteredOptions.length;
+        setSelectedOption(filteredOptions[nextIndex]);
+      }
     }
   };
 
@@ -78,7 +107,12 @@ export function Dropdown<T>({
       {label && <Label>{label}</Label>}
       <div
         className={`${bgColor} text-text-primary p-2 rounded-md flex justify-between items-center cursor-pointer`}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => {
+          setIsOpen(!isOpen);
+          if (!isOpen && filterable && inputRef.current) {
+            setTimeout(() => inputRef.current?.focus(), 0);
+          }
+        }}
         onKeyDown={handleKeyDown}
         tabIndex={0}
         role="button"
@@ -96,45 +130,60 @@ export function Dropdown<T>({
         />
       </div>
 
-      <div className={`relative ${isOpen ? 'block' : 'hidden'}`}>
-        <ul
-          ref={optionsRef}
-          className={`absolute z-10 w-full mt-1 ${bgColor} border border-gray-700 rounded-md shadow-lg max-h-60 overflow-y-scroll scrollbar-hide`}
-          role="listbox"
-          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-        >
-          {options.map((option, index) => (
-            <li
-              key={index}
-              className={`p-2 cursor-pointer hover:bg-primary-accent hover:text-text-primary ${
-                option === selectedOption ? `bg-primary-accent/80 text-text-primary` : ''
-              }`}
-              onClick={() => {
-                setSelectedOption(option);
-                setIsOpen(false);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' || e.key === ' ') {
+      {isOpen && (
+        <div className="relative">
+          {filterable && (
+            <input
+              ref={inputRef}
+              type="text"
+              className={`${bgColor} text-text-primary p-2 rounded-md w-full mt-1`}
+              value={filterText}
+              onChange={(e) => setFilterText(e.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder="Type to filter..."
+            />
+          )}
+          <ul
+            ref={optionsRef}
+            className={`absolute z-10 w-full mt-1 ${bgColor} border border-gray-700 rounded-md shadow-lg max-h-60 overflow-y-scroll scrollbar-hide`}
+            role="listbox"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {filteredOptions.map((option, index) => (
+              <li
+                key={index}
+                className={`p-2 cursor-pointer hover:bg-primary-accent hover:text-text-primary ${
+                  option === selectedOption ? `bg-primary-accent/80 text-text-primary` : ''
+                }`}
+                onClick={() => {
                   setSelectedOption(option);
                   setIsOpen(false);
-                }
-              }}
-              tabIndex={0}
-              role="option"
-              aria-selected={option === selectedOption}
-            >
-              {renderOption(option)}
-            </li>
-          ))}
-        </ul>
-        <div className="absolute right-0 top-0 w-[10px] h-screen max-h-60 bg-tertiary-background mt-1 rounded-full z-10">
-          <div
-            ref={scrollThumbRef}
-            className="bg-primary-background/70 rounded-full cursor-pointer mt-[1px]"
-            style={{ position: 'absolute', right: 1, width: '8px' }}
-          />
+                  setFilterText('');
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    setSelectedOption(option);
+                    setIsOpen(false);
+                    setFilterText('');
+                  }
+                }}
+                tabIndex={0}
+                role="option"
+                aria-selected={option === selectedOption}
+              >
+                {renderOption(option)}
+              </li>
+            ))}
+          </ul>
+          <div className="absolute right-0 top-0 w-[10px] h-screen max-h-60 bg-tertiary-background mt-1 rounded-full z-10">
+            <div
+              ref={scrollThumbRef}
+              className="bg-primary-background/70 rounded-full cursor-pointer mt-[1px]"
+              style={{ position: 'absolute', right: 1, width: '8px' }}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

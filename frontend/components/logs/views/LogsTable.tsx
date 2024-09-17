@@ -50,6 +50,8 @@ export function LogsTable({ initialLogs, tags }: LogsTableProps) {
             setSelectedOption={(option) => setTagsFilter(option ? [option.value] : [])}
             placeholder={'Pick a tag'}
             renderOption={(option) => <span>{option?.label}</span>}
+            filterable
+            toString={(option) => option!.label}
           />
         </div>
         <FaGear
