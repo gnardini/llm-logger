@@ -54,7 +54,7 @@ export async function apiRouter() {
       res.sendStatus(500);
     }
   });
-  router.use(json());
+  router.use(json({ limit: '20mb' }));
 
   const currentFilePath = fileURLToPath(import.meta.url);
   const currentDirPath = path.dirname(currentFilePath);

@@ -23,7 +23,7 @@ export function Header({ user, onScrollToPricing, onGoToApp }: Props) {
           Live Demo
         </a>
         <a
-          href="https://github.com/gnardini"
+          href="https://github.com/gnardini/llm-logger"
           target="_blank"
           className="md:text-lg text-text-primary hover:underline"
         >
